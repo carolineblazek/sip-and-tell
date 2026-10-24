@@ -1,0 +1,18 @@
+<svg width="34.4348" height="34.4348" viewBox="0 0 34.4348 34.4348" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Core &#226;&#128;&#148; Sweet (100)">
+<g id="Core &#226;&#128;&#148; Sweet" filter="url(#filter0_f_0_4)">
+<circle cx="17.2174" cy="17.2174" r="15.6522" fill="url(#paint0_radial_0_4)"/>
+</g>
+</g>
+<defs>
+<filter id="filter0_f_0_4" x="0" y="0" width="34.4348" height="34.4348" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="0.782609" result="effect1_foregroundBlur_0_4"/>
+</filter>
+<radialGradient id="paint0_radial_0_4" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(17.2174 17.2174) scale(15.6522)">
+<stop stop-color="#8B8792"/>
+<stop offset="1" stop-color="#6E6876"/>
+</radialGradient>
+</defs>
+</svg>

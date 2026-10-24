@@ -1,0 +1,14 @@
+<svg width="34.4348" height="34.4348" viewBox="0 0 34.4348 34.4348" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Core &#226;&#128;&#148; Citrus (100)">
+<g id="Core &#226;&#128;&#148; Citrus" filter="url(#filter0_f_0_4)">
+<path d="M17.2174 1.56522L20.5377 13.8971L32.8696 17.2174L20.5377 20.5377L17.2174 32.8696L13.8971 20.5377L1.56522 17.2174L13.8971 13.8971L17.2174 1.56522Z" fill="#FFFDF6"/>
+</g>
+</g>
+<defs>
+<filter id="filter0_f_0_4" x="0" y="0" width="34.4348" height="34.4348" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="0.782609" result="effect1_foregroundBlur_0_4"/>
+</filter>
+</defs>
+</svg>

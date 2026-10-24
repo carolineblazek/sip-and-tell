@@ -1,0 +1,20 @@
+<svg width="230" height="230" viewBox="0 0 230 230" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<use xlink:href="#stroke0_320_510" fill="url(#paint0_radial_320_510)"/>
+<mask id="stroke1_320_510" fill="white">
+<use xlink:href="#stroke0_320_510"/>
+</mask>
+<path d="M115.001 37.0322C141.539 7.5322 184.135 -7.0597 225.083 3.34668L225.97 3.5752L226.33 3.6709L226.425 4.03125C237.27 45.2505 222.681 88.2711 192.967 115C222.681 141.729 237.27 184.75 226.425 225.97L226.33 226.33L225.97 226.425C184.751 237.27 141.729 222.681 115 192.968C88.271 222.681 45.2509 237.27 4.03223 226.425L3.67188 226.33L3.57617 225.97C-7.26929 184.75 7.31861 141.728 37.0322 114.999C7.31958 88.27 -7.26896 45.2498 3.57617 4.03125L3.67188 3.6709L4.03223 3.5752C45.2511 -7.26993 88.272 7.3189 115.001 37.0322Z" stroke-width="2.83935" stroke="#996946" stroke-opacity="0.75" mask="url(#stroke1_320_510)"/>
+<circle cx="115" cy="115" r="50" fill="url(#paint1_radial_320_510)"/>
+<defs>
+<radialGradient id="paint0_radial_320_510" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(115 115) scale(115 115)">
+<stop stop-color="#E9D1C0"/>
+<stop offset="0.6" stop-color="#C4875A"/>
+<stop offset="1" stop-color="#A9744D"/>
+</radialGradient>
+<radialGradient id="paint1_radial_320_510" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(115 115) scale(50)">
+<stop stop-color="#8E725D"/>
+<stop offset="1" stop-color="#724E34"/>
+</radialGradient>
+<path id="stroke0_320_510" d="M115.001 37.0322C141.539 7.5322 184.135 -7.0597 225.083 3.34668L225.97 3.5752L226.33 3.6709L226.425 4.03125C237.27 45.2505 222.681 88.2711 192.967 115C222.681 141.729 237.27 184.75 226.425 225.97L226.33 226.33L225.97 226.425C184.751 237.27 141.729 222.681 115 192.968C88.271 222.681 45.2509 237.27 4.03223 226.425L3.67188 226.33L3.57617 225.97C-7.26929 184.751 7.3186 141.728 37.0322 114.999C7.31958 88.27 -7.26896 45.2498 3.57617 4.03125L3.67188 3.6709L4.03223 3.5752C45.2511 -7.26993 88.272 7.3189 115.001 37.0322Z"/>
+</defs>
+</svg>

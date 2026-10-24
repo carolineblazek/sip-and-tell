@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sip &amp; Tell</title>
+  <meta name="description" content="Sip & Tell is a community archive of drinks and the moments surrounding them.">
+  <link rel="icon" href="assets/favicon/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <script>
+    // Open whichever space is open right now: Day Café 6AM–6PM, Moon Saloon otherwise.
+    var h = new Date().getHours();
+    location.replace((h >= 6 && h < 18 ? 'day/' : 'moon/') + location.hash);
+  </script>
+  <style>body{font-family:serif;padding:30px;background:#F1EBDF;color:#15141B}</style>
+</head>
+<body>
+  <p>Sip &amp; Tell: <a href="day/">The Day Café</a> / <a href="moon/">The Moon Saloon</a></p>
+</body>
+</html>

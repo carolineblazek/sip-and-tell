@@ -1,0 +1,14 @@
+<svg width="34.4348" height="34.4348" viewBox="0 0 34.4348 34.4348" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Core &#226;&#128;&#148; Bitter" filter="url(#filter0_f_0_4)">
+<circle id="Ellipse" cx="17.2174" cy="17.2174" r="14.8997" stroke="#6E6876" stroke-width="1.50502"/>
+<circle id="Ellipse_2" cx="17.2174" cy="17.2174" r="9.1806" stroke="#6E6876" stroke-width="1.50502"/>
+<circle id="Ellipse_3" cx="17.2174" cy="17.2174" r="4.21405" fill="#6E6876"/>
+</g>
+<defs>
+<filter id="filter0_f_0_4" x="0" y="0" width="34.4348" height="34.4348" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="0.782609" result="effect1_foregroundBlur_0_4"/>
+</filter>
+</defs>
+</svg>

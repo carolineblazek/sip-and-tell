@@ -1,0 +1,89 @@
+{
+  "$description": "Sip & Tell page copy. Edit text here; app.js renders it. Underlined (linked) words are marked with [square brackets].",
+  "spaces": {
+    "day": {
+      "name": "The Day Café",
+      "short": "Day Café",
+      "hours": "6AM–6PM",
+      "open": 6,
+      "close": 18,
+      "icon": "sun",
+      "title": ["the day", "café"],
+      "greeting": "good morning, come on in.",
+      "intro": "Meet today’s special, or browse the menu by the moment you’re in.",
+      "specialLabel": "Today’s special",
+      "special": "london-fog",
+      "statement": "the day café is where [study groups] come to chat, hard mornings are made [simple], and [old stories] are revived.",
+      "ticker": ["A warm hug", "Clean sheets", "A misty morning", "Homesickness", "A burst of energy", "A clear head", "Being taken care of", "A grassy meadow", "Summer vacation", "A big laugh"],
+      "aboutExample": { "drink": "matcha", "caption": "Matcha / Leaf + Bitter" }
+    },
+    "moon": {
+      "name": "The Moon Saloon",
+      "short": "Moon Saloon",
+      "hours": "6PM–6AM",
+      "open": 18,
+      "close": 6,
+      "icon": "moon",
+      "title": ["the moon", "saloon"],
+      "greeting": "good evening, come on in.",
+      "intro": "Meet tonight’s special, or browse the menu by the moment you’re in.",
+      "specialLabel": "Tonight’s special",
+      "special": "margarita",
+      "statement": "the moon saloon is where [old friends reconnect], past mistakes inspire [laughs], and worries turn into [dance moves].",
+      "ticker": ["Main character energy", "A never-ending song", "Neon lights", "A leap of faith", "Butterflies", "Golden hour", "An early night", "Ocean waves", "A summer breeze", "Chic sophistication"],
+      "aboutExample": { "drink": "margarita", "caption": "Margarita / Spirit + Citrus" }
+    }
+  },
+  "occasions": ["Comfort", "Catching up", "Grinding", "Celebrating", "Connecting", "Reset", "Out & about"],
+  "phrases": {
+    "occasion": {
+      "Comfort": ["for", "comfort"],
+      "Catching up": ["while", "catching up"],
+      "Grinding": ["while", "grinding"],
+      "Celebrating": ["while", "celebrating"],
+      "Connecting": ["while", "connecting"],
+      "Reset": ["for", "a reset"],
+      "Out & about": ["while", "out and about"]
+    },
+    "company": {
+      "Just me": "just me",
+      "A date": "a date",
+      "My best friend": "my best friend",
+      "The whole crew": "the whole crew",
+      "Family": "family",
+      "Classmates / coworkers": "classmates",
+      "New friends": "new friends",
+      "A stranger": "a stranger"
+    },
+    "companyMost": {
+      "Just me": "sitting by themselves",
+      "default": "with {company}"
+    }
+  },
+  "base": { "leaf": "Leaf", "bean": "Bean", "fruit": "Fruit", "spirit": "Spirit", "fizz": "Fizz" },
+  "core": { "sweet": "Sweet", "creamy": "Creamy", "bitter": "Bitter", "citrus": "Citrus", "spiced": "Spiced" },
+  "about": {
+    "label": "About the project",
+    "headline": "A community archive of drinks, and the [moments] that come with them.",
+    "columns": [
+      "Sip & Tell is a microsite about the drinks we reach for, and the people, places and feelings that come along with them. Every drink on the menu has a recipe, an illustration and an archive of short stories left by the people who’ve had it.",
+      "Instead of star ratings, each story is built from four questions: when you reach for the drink, what it tastes like, who’s at the table, and what actually happened. Together they read like a small portrait of someone’s experience."
+    ],
+    "stepsTitle": "How it works",
+    "steps": [
+      { "title": "Browse the catalog", "text": "Explore the drinks on the bar, or filter by the moment you’re in." },
+      { "title": "Make it yourself", "text": "Every drink comes with a simple recipe, plus a zero-proof swap where needed." },
+      { "title": "Read the archive", "text": "See what a drink tastes like to others, and the people and moments they shared it with." },
+      { "title": "Leave a story", "text": "Answer four quick questions to add your own memories to the archive." }
+    ],
+    "iconsTitle": "Reading the icons",
+    "silhouettes": { "label": "Silhouette / what it’s made from", "items": [["leaf", "Tea"], ["bean", "Coffee"], ["fruit", "Fruit"], ["spirit", "Spirit"], ["fizz", "Sparkling"]] },
+    "cores": { "label": "Core / how it tastes", "items": [["sweet", "Sweet"], ["creamy", "Creamy"], ["bitter", "Bitter"], ["citrus", "Citrus"], ["spiced", "Spiced"]] },
+    "tagline": "A community drink archive",
+    "quote": "Sometimes the drink isn’t really the point. It’s [the moments surrounding it] that stay in our memory."
+  },
+  "footer": {
+    "blurb": "A community archive of drinks and the moments surrounding them. Find your usual and leave a story behind.",
+    "credits": ["Design & illustration by Caroline Blazek", "Built with community stories"]
+  }
+}

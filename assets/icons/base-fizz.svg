@@ -1,0 +1,15 @@
+<svg width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Fizz">
+<g id="Fizz_2">
+<circle cx="36" cy="36" r="36" fill="url(#paint0_radial_0_4)"/>
+<circle cx="36" cy="36" r="35.7652" stroke="#938C9F" stroke-opacity="0.75" stroke-width="0.469565"/>
+</g>
+</g>
+<defs>
+<radialGradient id="paint0_radial_0_4" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(36 36) scale(36)">
+<stop stop-color="#E6E3EC"/>
+<stop offset="0.6" stop-color="#BDB4CC"/>
+<stop offset="1" stop-color="#A39BAF"/>
+</radialGradient>
+</defs>
+</svg>
