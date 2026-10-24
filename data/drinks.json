@@ -1,0 +1,332 @@
+{
+  "$description": "Sip & Tell drink data. Story counts, answer bars and the summary sentence are computed from `stories` at render time, never stored. `published: false` drinks are listed on the menu but not clickable (no link, no hover, no popup) until their pages exist.",
+  "units": {
+    "ml_per_oz": 30,
+    "ml_per_tsp": 5
+  },
+  "drinks": [
+    {
+      "id": "london-fog",
+      "name": "London Fog",
+      "space": "day",
+      "published": true,
+      "mark": {
+        "color": "#A79CE6",
+        "base": "leaf",
+        "core": "creamy"
+      },
+      "intro": "A fragrant tea latte that blends Earl Grey, steamed milk, and a touch of sweetness.",
+      "about": "The London Fog gets its distinctive flavor from bergamot-scented Earl Grey tea. Steamed milk and vanilla create a soft, creamy drink that balances the tea's citrusy aroma.",
+      "funFact": "Despite the name, the London Fog was most likely born in a Vancouver café in the 1990s. The story goes it was named for the way steamed milk clouds the tea, like fog rolling in.",
+      "served": [
+        "Steamed",
+        "Hot"
+      ],
+      "recipe": {
+        "versions": {
+          "hot": {
+            "label": "Hot",
+            "ingredients": [
+              {
+                "item": "Earl Grey tea",
+                "qty": 1,
+                "unit": "bag"
+              },
+              {
+                "item": "Hot water",
+                "qty": 4,
+                "unit": "oz"
+              },
+              {
+                "item": "Vanilla syrup",
+                "qty": 1,
+                "unit": "tsp"
+              },
+              {
+                "item": "Milk",
+                "qty": 4,
+                "unit": "oz"
+              },
+              {
+                "item": "Dried lavender",
+                "optional": true
+              }
+            ],
+            "method": [
+              "Steep the tea bag in hot water for 3–5 minutes.",
+              "Stir in the vanilla syrup.",
+              "Steam the milk until soft and frothy.",
+              "Pour the milk into the tea and serve."
+            ]
+          },
+          "iced": {
+            "label": "Iced",
+            "ingredients": [
+              {
+                "item": "Earl Grey tea",
+                "qty": 2,
+                "unit": "bag"
+              },
+              {
+                "item": "Hot water",
+                "qty": 2,
+                "unit": "oz"
+              },
+              {
+                "item": "Vanilla syrup",
+                "qty": 2,
+                "unit": "tsp"
+              },
+              {
+                "item": "Cold milk",
+                "qty": 4,
+                "unit": "oz"
+              },
+              {
+                "item": "Ice"
+              }
+            ],
+            "method": [
+              "Steep the tea bags in hot water for 5 minutes for a strong brew.",
+              "Stir in the vanilla syrup and let it cool.",
+              "Pour over a glass of ice.",
+              "Top with cold milk and stir."
+            ]
+          }
+        },
+        "servesMax": 3
+      },
+      "stories": [
+        {
+          "occasion": "Connecting",
+          "moment": "Taking a scenic, romantic stroll",
+          "company": "A date",
+          "tastesLike": "A grassy meadow",
+          "note": "Just relaxing and enjoying the day. Get it with vanilla or lavender.",
+          "review": "My usual",
+          "signedAs": "Sarah"
+        },
+        {
+          "occasion": "Catching up",
+          "moment": "A walk-and-talk around the neighborhood",
+          "company": "My best friend",
+          "tastesLike": "A warm hug",
+          "note": "Usual morning coffee run.",
+          "review": "Would order again",
+          "signedAs": "Jared Garelick"
+        },
+        {
+          "occasion": "Grinding",
+          "moment": "On the way to an early morning class",
+          "company": "Classmates / coworkers",
+          "tastesLike": "A clear head",
+          "note": "The only thing that gets me through 8:30 lectures.",
+          "review": "My usual",
+          "signedAs": "Anonymous"
+        }
+      ]
+    },
+    {
+      "id": "margarita",
+      "name": "Margarita",
+      "space": "moon",
+      "published": true,
+      "mark": {
+        "color": "#FFD03D",
+        "base": "spirit",
+        "core": "citrus"
+      },
+      "intro": "A bright combination of tequila, citrus, and salt that balances sweet, sour, and savory flavors.",
+      "about": "A classic Margarita combines tequila with lime juice and orange liqueur. It is commonly served over ice or shaken and strained into a glass with a salted rim.",
+      "funFact": "The frozen margarita machine was invented in 1971 by a Dallas restaurant owner who rigged up a soft-serve ice cream machine. The original now lives in the Smithsonian.",
+      "served": [
+        "Shaken",
+        "Cold"
+      ],
+      "recipe": {
+        "servesMax": 3,
+        "versions": {
+          "classic": {
+            "label": "Classic",
+            "ingredients": [
+              {
+                "item": "Tequila",
+                "qty": 2,
+                "unit": "oz"
+              },
+              {
+                "item": "Lime juice",
+                "qty": 1,
+                "unit": "oz"
+              },
+              {
+                "item": "Orange liqueur",
+                "qty": 1,
+                "unit": "oz"
+              },
+              {
+                "item": "Salt",
+                "note": "for the rim"
+              },
+              {
+                "item": "Ice cubes"
+              },
+              {
+                "item": "Lime wedge",
+                "note": "to garnish"
+              }
+            ],
+            "method": [
+              "Rim a glass with lime and dip in salt.",
+              "Shake tequila, lime juice, and orange liqueur with ice.",
+              "Garnish with a lime wedge."
+            ]
+          },
+          "zero-proof": {
+            "label": "Zero-proof",
+            "ingredients": [
+              {
+                "item": "Lime juice",
+                "qty": 1,
+                "unit": "oz"
+              },
+              {
+                "item": "Orange juice",
+                "qty": 1,
+                "unit": "oz"
+              },
+              {
+                "item": "Agave syrup",
+                "qty": 0.5,
+                "unit": "oz"
+              },
+              {
+                "item": "Soda water",
+                "qty": 2,
+                "unit": "oz"
+              },
+              {
+                "item": "Salt",
+                "note": "for the rim"
+              },
+              {
+                "item": "Ice cubes"
+              },
+              {
+                "item": "Lime wedge",
+                "note": "to garnish"
+              }
+            ],
+            "method": [
+              "Rim a glass with lime and dip in salt.",
+              "Shake lime juice, orange juice, and agave with ice.",
+              "Strain over fresh ice and top with soda water.",
+              "Garnish with a lime wedge."
+            ]
+          }
+        }
+      },
+      "stories": [
+        {
+          "occasion": "Catching up",
+          "moment": "Ordering something that sounded impressive",
+          "company": "My best friend",
+          "tastesLike": "A summer breeze",
+          "note": "I was celebrating life, man. I have genuinely no idea.",
+          "review": "The company mattered more",
+          "signedAs": "PK"
+        },
+        {
+          "occasion": "Comfort",
+          "moment": "Decompressing after a long week",
+          "company": "The whole crew",
+          "tastesLike": "Golden hour",
+          "note": "Just queening out. Live it up, mama.",
+          "review": "Would order again",
+          "signedAs": "Jared Garelick"
+        },
+        {
+          "occasion": "Connecting",
+          "moment": "A big party in a tiny kitchen",
+          "company": "Family",
+          "tastesLike": "An early night",
+          "note": "Nice reunited family gathering. Make sure to mix it well.",
+          "review": "First time",
+          "signedAs": "Sarah"
+        }
+      ]
+    },
+    {
+      "id": "latte",
+      "name": "Latte",
+      "space": "day",
+      "published": false,
+      "mark": {
+        "color": "#DFA36B",
+        "base": "bean",
+        "core": "creamy"
+      },
+      "stories": []
+    },
+    {
+      "id": "matcha",
+      "name": "Matcha",
+      "space": "day",
+      "published": false,
+      "mark": {
+        "color": "#86C765",
+        "base": "leaf",
+        "core": "bitter"
+      },
+      "stories": []
+    },
+    {
+      "id": "boba-tea",
+      "name": "Boba Tea",
+      "space": "day",
+      "published": false,
+      "mark": {
+        "color": "#C4875A",
+        "base": "leaf",
+        "core": "sweet"
+      },
+      "stories": []
+    },
+    {
+      "id": "cosmopolitan",
+      "name": "Cosmopolitan",
+      "space": "moon",
+      "published": false,
+      "mark": {
+        "color": "#FF6BA8",
+        "base": "spirit",
+        "core": "sweet"
+      },
+      "stories": []
+    },
+    {
+      "id": "spritz",
+      "name": "Spritz",
+      "space": "moon",
+      "published": false,
+      "mark": {
+        "color": "#FF9340",
+        "base": "fizz",
+        "core": "bitter"
+      },
+      "stories": []
+    },
+    {
+      "id": "shirley-temple",
+      "name": "Shirley Temple",
+      "space": "moon",
+      "published": false,
+      "mark": {
+        "color": "#FF5F6D",
+        "base": "fizz",
+        "core": "sweet"
+      },
+      "stories": []
+    }
+  ]
+}
