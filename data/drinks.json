@@ -297,13 +297,100 @@
       "id": "cosmopolitan",
       "name": "Cosmopolitan",
       "space": "moon",
-      "published": false,
+      "published": true,
       "mark": {
         "color": "#FF6BA8",
         "base": "spirit",
         "core": "sweet"
       },
-      "stories": []
+      "stories": [],
+      "sentenceName": "cosmopolitan",
+      "intro": "A sharply pink cocktail with a citrusy personality and unmistakable late-night energy.",
+      "about": "The Cosmopolitan combines vodka, cranberry juice, orange liqueur, and lime juice. It is tart, lightly sweet, and usually served chilled in a martini glass.",
+      "funFact": "The Cosmopolitan became particularly famous in the 1990s after appearing frequently on Sex and the City.",
+      "served": [
+        "Shaken",
+        "Cold"
+      ],
+      "recipe": {
+        "servesMax": 3,
+        "versions": {
+          "classic": {
+            "label": "Classic",
+            "ingredients": [
+              {
+                "item": "Vodka",
+                "qty": 1.5,
+                "unit": "oz"
+              },
+              {
+                "item": "Cranberry juice",
+                "qty": 0.75,
+                "unit": "oz"
+              },
+              {
+                "item": "Triple sec",
+                "qty": 0.5,
+                "unit": "oz"
+              },
+              {
+                "item": "Lime juice",
+                "qty": 0.5,
+                "unit": "oz"
+              },
+              {
+                "item": "Orange twist",
+                "note": "to garnish"
+              }
+            ],
+            "method": [
+              "Add vodka, cranberry juice, triple sec, and lime juice to a shaker.",
+              "Add ice and shake vigorously.",
+              "Strain into a chilled cocktail glass.",
+              "Garnish with an orange twist."
+            ]
+          },
+          "zero-proof": {
+            "label": "Zero-proof",
+            "ingredients": [
+              {
+                "item": "Cranberry juice",
+                "qty": 2,
+                "unit": "oz"
+              },
+              {
+                "item": "Lime juice",
+                "qty": 0.5,
+                "unit": "oz"
+              },
+              {
+                "item": "Orange juice",
+                "qty": 0.5,
+                "unit": "oz"
+              },
+              {
+                "item": "Simple syrup",
+                "qty": 0.25,
+                "unit": "oz"
+              },
+              {
+                "item": "Soda water",
+                "note": "a splash"
+              },
+              {
+                "item": "Orange twist",
+                "note": "to garnish"
+              }
+            ],
+            "method": [
+              "Shake cranberry juice, lime juice, orange juice, and simple syrup with ice.",
+              "Strain into a chilled cocktail glass.",
+              "Top with a splash of soda.",
+              "Garnish with an orange twist."
+            ]
+          }
+        }
+      }
     },
     {
       "id": "spritz",

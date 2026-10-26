@@ -29,7 +29,8 @@ hr.rule { border: 0; height: var(--stroke-accent); background: var(--accent); ma
 .noscript { padding: 30px; }
 
 /* Focus: 2px accent ring with a 2px gap, on everything you can tap */
-:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: var(--radius-pill); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.text-link { border-radius: var(--radius-pill); } /* gives the focus ring on text links a pill shape */
 
 /* ---------- layout ---------- */
 
@@ -101,8 +102,9 @@ a.door:active { background: var(--accent-30); }
 .welcome .button-row { margin-top: var(--space-group); }
 
 .stage { position: relative; display: block; width: min(100%, 380px); aspect-ratio: 380 / 400; margin: 20px auto 0; }
-.arch { position: absolute; inset: 0; background: var(--accent-60); border: var(--stroke-accent) solid var(--accent); border-radius: 999px 999px 0 0; }
-.stage-illo { position: absolute; left: 50%; bottom: 0; width: 86%; transform: translateX(-50%); max-height: 112%; object-fit: contain; object-position: bottom; }
+.arch { position: absolute; inset: 0; background: var(--accent); border: var(--stroke-accent) solid var(--accent); border-radius: 999px 999px 0 0; }
+/* Hero: illustration is 75% of the arch width, centered, flush with the bottom */
+.stage-illo { position: absolute; left: 50%; bottom: 0; width: 75%; height: auto; max-height: 100%; transform: translateX(-50%); object-fit: contain; object-position: bottom; }
 
 .special { display: flex; flex-direction: column; gap: var(--space-group); }
 .special-name { display: flex; align-items: center; gap: var(--space-group); }
@@ -173,8 +175,9 @@ a.door:active { background: var(--accent-30); }
 .tag-0 { background: var(--accent); }
 .tag-1 { background: var(--accent-60); }
 .tag-2 { background: var(--accent-30); color: var(--ink); }
-.pop-illo { display: flex; justify-content: center; height: 200px; padding: 10px; background: var(--accent-60); border: var(--stroke-accent) solid var(--accent); border-radius: var(--radius-card); overflow: hidden; }
-.pop-illo img { height: 100%; width: auto; object-fit: contain; }
+/* Illustration boxes: accent-60 card, drink fills the width and sits on the bottom */
+.pop-illo { display: flex; justify-content: center; align-items: flex-end; padding: 30px; background: var(--accent-60); border: var(--stroke-accent) solid var(--accent); border-radius: var(--radius-card); overflow: hidden; }
+.pop-illo img { width: 100%; height: auto; }
 
 /* ---------- footer ---------- */
 
@@ -198,8 +201,8 @@ a.door:active { background: var(--accent-30); }
 .details div { display: flex; flex-direction: column; gap: var(--space-group); }
 .traits { display: flex; gap: var(--space-item); flex-wrap: wrap; }
 .traits > span { display: flex; flex-direction: column; gap: 4px; }
-.mark-card { display: flex; align-items: center; justify-content: center; padding: 20px; height: 380px; background: var(--accent-60); border: var(--stroke-accent) solid var(--accent); border-radius: var(--radius-card); overflow: hidden; }
-.mark-card img { height: 100%; width: auto; object-fit: contain; }
+.mark-card { display: flex; align-items: flex-end; justify-content: center; padding: 30px 20px; background: var(--accent-60); border: var(--stroke-accent) solid var(--accent); border-radius: var(--radius-card); overflow: hidden; }
+.mark-card img { width: 100%; height: auto; }
 
 .recipe-card { display: flex; flex-direction: column; gap: 15px; }
 .recipe-top { display: flex; flex-direction: column; gap: 15px; }
@@ -295,7 +298,7 @@ a.door:active { background: var(--accent-30); }
   .special-name .mark { width: 56px; height: 56px; }
 
   .drink-hero { display: grid; grid-template-columns: 1fr 560px; gap: 30px; }
-  .mark-card { height: auto; min-height: 600px; }
+  .mark-card { height: auto; }
   .title-card { gap: 30px; }
   .drink-mark { width: 70px; height: 70px; }
   .details div { flex-direction: row; gap: 30px; }
@@ -330,7 +333,7 @@ a.door:active { background: var(--accent-30); }
   .menu-row.is-published:hover .drink-pop,
   .menu-row.is-published:focus-within .drink-pop { display: flex; }
   .pop-card { width: 330px; }
-  .pop-illo { width: 330px; height: auto; min-height: 360px; }
+  .pop-illo { width: 330px; }
 }
 
 /* Wide desktop: the three-column hero from the Figma desktop page */
@@ -339,3 +342,92 @@ a.door:active { background: var(--accent-30); }
   .hero { grid-template-columns: 380px 1fr 400px; }
   .hero .stage { grid-column: auto; grid-row: auto; }
 }
+
+/* ---------- empty stories ---------- */
+
+.story-slot { border-style: dashed; align-items: flex-start; }
+.story-slot .btn { margin-top: auto; }
+.story-placeholder { background: var(--track-60); border-radius: var(--radius-card); min-height: 300px; border: 0; }
+
+/* ---------- story questionnaire ---------- */
+
+.q-dialog {
+  width: 100%; max-width: 100%; height: 100%; max-height: 100%; margin: 0; padding: 0; border: 0;
+  background: var(--card); color: var(--ink);
+}
+.q-dialog::backdrop { background: rgb(21 20 27 / .55); }
+.q-card { position: relative; display: flex; flex-direction: column; gap: var(--space-item); min-height: 100%; padding: 20px var(--gutter) 28px; }
+.q-top { display: flex; justify-content: space-between; align-items: center; gap: var(--space-group); }
+.q-drink, .q-meta { display: flex; align-items: center; gap: var(--space-group); }
+.q-top-mark { width: 28px; height: 28px; }
+.q-wide { display: none; }
+.q-close { min-width: 44px; min-height: 44px; font: var(--fs-body) var(--font-mono); border-radius: var(--radius-pill); }
+@media (hover: hover) { .q-close:hover { background: var(--track); } }
+.q-close:active { background: var(--accent-30); }
+.q-progress { display: flex; gap: 10px; }
+.q-progress li { flex: 1; height: 4px; border-radius: 2px; background: var(--ink-15); }
+.q-progress li.is-done { background: var(--accent); }
+.q-question { display: flex; flex-direction: column; gap: var(--space-group); }
+.q-question h2:focus { outline: none; }
+.q-body { display: flex; flex-direction: column; gap: 15px; }
+.q-dialog .chip.is-error { border-color: var(--error); }
+.q-drinks { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+.q-drink-card {
+  display: flex; flex-direction: column; align-items: center; gap: var(--space-group); padding: 15px 10px;
+  border: 1px solid var(--ink-10); border-radius: var(--radius-inner); text-align: center;
+}
+.q-drink-mark { width: 80px; height: 80px; }
+.q-drink-card[aria-pressed="true"] { background: var(--accent-30); border-color: var(--accent); }
+.q-drink-card.is-error { border-color: var(--error); }
+@media (hover: hover) { .q-drink-card:hover { border-color: var(--accent); } }
+.q-options { display: flex; flex-direction: column; gap: 10px; }
+.q-option {
+  display: flex; align-items: center; gap: 15px; min-height: 44px; padding: 15px; border-radius: var(--radius-inner);
+  background: var(--track); border: 1px solid transparent; text-align: left;
+}
+.q-dot { flex: none; width: 12px; height: 12px; border-radius: 50%; border: 1px solid var(--ink); }
+.q-option[aria-pressed="true"] { background: var(--accent-30); border-color: var(--accent); }
+.q-option[aria-pressed="true"] .q-dot { background: var(--accent); border-color: var(--accent); }
+@media (hover: hover) { .q-option:not(:disabled):hover { border-color: var(--accent); } }
+.q-own {
+  display: flex; align-items: center; gap: 10px; min-height: 44px; padding: 10px 15px; border: 1px dashed var(--ink-15);
+  border-radius: var(--radius-inner);
+}
+.q-own:focus-within { border: 2px solid var(--accent); }
+.q-own input, .q-field input, .q-field textarea {
+  flex: 1; width: 100%; border: 0; background: none; color: var(--ink); font: var(--fs-body)/1.6 var(--font-body); padding: 0; resize: vertical;
+}
+.q-own input:focus, .q-field input:focus, .q-field textarea:focus { outline: none; }
+.q-own input::placeholder, .q-field input::placeholder, .q-field textarea::placeholder { color: var(--muted); }
+.q-own input:disabled { opacity: .4; }
+.q-count { color: var(--muted); white-space: nowrap; }
+.q-count.is-limit { color: var(--error); }
+.q-field { display: flex; flex-direction: column; gap: 10px; padding: 15px 20px; background: var(--page); border: 1px solid var(--ink-10); border-radius: var(--radius-inner); }
+.q-field:focus-within { border: 2px solid var(--accent); }
+.q-field.is-error { border-color: var(--error); }
+.q-field .q-count { align-self: flex-end; }
+.q-note, .q-error-msg { display: flex; gap: 8px; align-items: baseline; }
+.q-note::before, .q-error-msg::before { content: ""; flex: none; width: 6px; height: 6px; border-radius: 50%; background: var(--muted); transform: translateY(-2px); }
+.q-error-msg { color: var(--error); }
+.q-error-msg::before { background: var(--error); }
+.q-banner { padding: 15px 20px; background: var(--error-10); border: 1px solid var(--error); border-radius: var(--radius-inner); }
+.q-honeypot { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.q-nav { display: flex; justify-content: space-between; align-items: center; gap: var(--space-group); margin-top: auto; padding-top: var(--space-group); }
+.q-nav-end { justify-content: flex-end; }
+.q-nav .btn-primary[aria-disabled="true"] { opacity: .4; }
+.q-preview { display: flex; }
+.q-preview .story-card { flex: 1 1 auto; }
+.q-leave { position: absolute; inset: 0; display: grid; place-items: center; padding: var(--gutter); background: rgb(21 20 27 / .55); border-radius: inherit; }
+.q-leave-card { display: flex; flex-direction: column; gap: 15px; max-width: 420px; padding: 20px; background: var(--card); border: var(--stroke-accent) solid var(--accent); border-radius: var(--radius-card); }
+.q-leave-card .button-row { justify-content: flex-end; }
+
+@media (min-width: 768px) {
+  .q-dialog { width: min(760px, calc(100% - 40px)); height: auto; max-height: calc(100% - 40px); margin: auto; border: var(--stroke-accent) solid var(--accent); border-radius: var(--radius-card); }
+  .q-card { min-height: 0; padding: var(--space-block); gap: var(--space-item); }
+  .q-wide { display: inline; }
+  .q-drinks { grid-template-columns: repeat(4, 1fr); }
+  .q-nav { margin-top: var(--space-group); }
+}
+
+/* [hidden] must win over the flex display above */
+.q-dialog [hidden] { display: none !important; }

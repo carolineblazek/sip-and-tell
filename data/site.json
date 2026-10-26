@@ -1,5 +1,6 @@
 {
   "$description": "Sip & Tell page copy. Edit text here; app.js renders it. Underlined (linked) words are marked with [square brackets].",
+  "storiesEndpoint": "https://script.google.com/macros/s/AKfycbzk1bTtHneMTI13HtGusGdTjkgX8BvIVS0X3R88P4VN4A2U3sOkSxgeq-sbbSN2q395ZA/exec",
   "spaces": {
     "day": {
       "name": "The Day Café",
@@ -8,14 +9,31 @@
       "open": 6,
       "close": 18,
       "icon": "sun",
-      "title": ["the day", "café"],
+      "title": [
+        "the day",
+        "café"
+      ],
       "greeting": "good morning, come on in.",
       "intro": "Meet today’s special, or browse the menu by the moment you’re in.",
       "specialLabel": "Today’s special",
       "special": "london-fog",
       "statement": "the day café is where [study groups] come to chat, hard mornings are made [simple], and [old stories] are revived.",
-      "ticker": ["A warm hug", "Clean sheets", "A misty morning", "Homesickness", "A burst of energy", "A clear head", "Being taken care of", "A grassy meadow", "Summer vacation", "A big laugh"],
-      "aboutExample": { "drink": "matcha", "caption": "Matcha / Leaf + Bitter" }
+      "ticker": [
+        "A warm hug",
+        "Clean sheets",
+        "A misty morning",
+        "Homesickness",
+        "A burst of energy",
+        "A clear head",
+        "Being taken care of",
+        "A grassy meadow",
+        "Summer vacation",
+        "A big laugh"
+      ],
+      "aboutExample": {
+        "drink": "matcha",
+        "caption": "Matcha / Leaf + Bitter"
+      }
     },
     "moon": {
       "name": "The Moon Saloon",
@@ -24,26 +42,72 @@
       "open": 18,
       "close": 6,
       "icon": "moon",
-      "title": ["the moon", "saloon"],
+      "title": [
+        "the moon",
+        "saloon"
+      ],
       "greeting": "good evening, come on in.",
       "intro": "Meet tonight’s special, or browse the menu by the moment you’re in.",
       "specialLabel": "Tonight’s special",
       "special": "margarita",
       "statement": "the moon saloon is where [old friends reconnect], past mistakes inspire [laughs], and worries turn into [dance moves].",
-      "ticker": ["Main character energy", "A never-ending song", "Neon lights", "A leap of faith", "Butterflies", "Golden hour", "An early night", "Ocean waves", "A summer breeze", "Chic sophistication"],
-      "aboutExample": { "drink": "margarita", "caption": "Margarita / Spirit + Citrus" }
+      "ticker": [
+        "Main character energy",
+        "A never-ending song",
+        "Neon lights",
+        "A leap of faith",
+        "Butterflies",
+        "Golden hour",
+        "An early night",
+        "Ocean waves",
+        "A summer breeze",
+        "Chic sophistication"
+      ],
+      "aboutExample": {
+        "drink": "margarita",
+        "caption": "Margarita / Spirit + Citrus"
+      }
     }
   },
-  "occasions": ["Comfort", "Catching up", "Grinding", "Celebrating", "Connecting", "Reset", "Out & about"],
+  "occasions": [
+    "Comfort",
+    "Catching up",
+    "Grinding",
+    "Celebrating",
+    "Connecting",
+    "Reset",
+    "Out & about"
+  ],
   "phrases": {
     "occasion": {
-      "Comfort": ["for", "comfort"],
-      "Catching up": ["while", "catching up"],
-      "Grinding": ["while", "grinding"],
-      "Celebrating": ["while", "celebrating"],
-      "Connecting": ["while", "connecting"],
-      "Reset": ["for", "a reset"],
-      "Out & about": ["while", "out and about"]
+      "Comfort": [
+        "for",
+        "comfort"
+      ],
+      "Catching up": [
+        "while",
+        "catching up"
+      ],
+      "Grinding": [
+        "while",
+        "grinding"
+      ],
+      "Celebrating": [
+        "while",
+        "celebrating"
+      ],
+      "Connecting": [
+        "while",
+        "connecting"
+      ],
+      "Reset": [
+        "for",
+        "a reset"
+      ],
+      "Out & about": [
+        "while",
+        "out and about"
+      ]
     },
     "company": {
       "Just me": "just me",
@@ -60,8 +124,20 @@
       "default": "with {company}"
     }
   },
-  "base": { "leaf": "Leaf", "bean": "Bean", "fruit": "Fruit", "spirit": "Spirit", "fizz": "Fizz" },
-  "core": { "sweet": "Sweet", "creamy": "Creamy", "bitter": "Bitter", "citrus": "Citrus", "spiced": "Spiced" },
+  "base": {
+    "leaf": "Leaf",
+    "bean": "Bean",
+    "fruit": "Fruit",
+    "spirit": "Spirit",
+    "fizz": "Fizz"
+  },
+  "core": {
+    "sweet": "Sweet",
+    "creamy": "Creamy",
+    "bitter": "Bitter",
+    "citrus": "Citrus",
+    "spiced": "Spiced"
+  },
   "about": {
     "label": "About the project",
     "headline": "A community archive of drinks, and the [moments] that come with them.",
@@ -71,19 +147,243 @@
     ],
     "stepsTitle": "How it works",
     "steps": [
-      { "title": "Browse the catalog", "text": "Explore the drinks on the bar, or filter by the moment you’re in." },
-      { "title": "Make it yourself", "text": "Every drink comes with a simple recipe, plus a zero-proof swap where needed." },
-      { "title": "Read the archive", "text": "See what a drink tastes like to others, and the people and moments they shared it with." },
-      { "title": "Leave a story", "text": "Answer four quick questions to add your own memories to the archive." }
+      {
+        "title": "Browse the catalog",
+        "text": "Explore the drinks on the bar, or filter by the moment you’re in."
+      },
+      {
+        "title": "Make it yourself",
+        "text": "Every drink comes with a simple recipe, plus a zero-proof swap where needed."
+      },
+      {
+        "title": "Read the archive",
+        "text": "See what a drink tastes like to others, and the people and moments they shared it with."
+      },
+      {
+        "title": "Leave a story",
+        "text": "Answer four quick questions to add your own memories to the archive."
+      }
     ],
     "iconsTitle": "Reading the icons",
-    "silhouettes": { "label": "Silhouette / what it’s made from", "items": [["leaf", "Tea"], ["bean", "Coffee"], ["fruit", "Fruit"], ["spirit", "Spirit"], ["fizz", "Sparkling"]] },
-    "cores": { "label": "Core / how it tastes", "items": [["sweet", "Sweet"], ["creamy", "Creamy"], ["bitter", "Bitter"], ["citrus", "Citrus"], ["spiced", "Spiced"]] },
+    "silhouettes": {
+      "label": "Silhouette / what it’s made from",
+      "items": [
+        [
+          "leaf",
+          "Tea"
+        ],
+        [
+          "bean",
+          "Coffee"
+        ],
+        [
+          "fruit",
+          "Fruit"
+        ],
+        [
+          "spirit",
+          "Spirit"
+        ],
+        [
+          "fizz",
+          "Sparkling"
+        ]
+      ]
+    },
+    "cores": {
+      "label": "Core / how it tastes",
+      "items": [
+        [
+          "sweet",
+          "Sweet"
+        ],
+        [
+          "creamy",
+          "Creamy"
+        ],
+        [
+          "bitter",
+          "Bitter"
+        ],
+        [
+          "citrus",
+          "Citrus"
+        ],
+        [
+          "spiced",
+          "Spiced"
+        ]
+      ]
+    },
     "tagline": "A community drink archive",
     "quote": "Sometimes the drink isn’t really the point. It’s [the moments surrounding it] that stay in our memory."
   },
   "footer": {
     "blurb": "A community archive of drinks and the moments surrounding them. Find your usual and leave a story behind.",
-    "credits": ["Design & illustration by Caroline Blazek", "Built with community stories"]
+    "credits": [
+      "Design & illustration by Caroline Blazek",
+      "Built with community stories"
+    ]
+  },
+  "questionnaire": {
+    "$description": "Story questionnaire. Each occasion lists three Day Café moments and three Moon Saloon moments. Tastes-like answers come from each space's ticker list.",
+    "steps": [
+      {
+        "key": "drink",
+        "title": "Which drink?",
+        "hint": "[Required] / Pick 1"
+      },
+      {
+        "key": "occasion",
+        "title": "When do you reach for this?",
+        "hint": "[Required] / Pick 1–2"
+      },
+      {
+        "key": "tastes_like",
+        "title": "This drink tastes like…",
+        "hint": "[Required] / Pick 1"
+      },
+      {
+        "key": "company",
+        "title": "Who’s at the table?",
+        "hint": "[Required] / Pick 1"
+      },
+      {
+        "key": "review",
+        "title": "Quick review.",
+        "hint": "[Required] / Pick 1"
+      },
+      {
+        "key": "story",
+        "title": "Tell us more about a time you had this.",
+        "hint": "leave a note, then sign"
+      }
+    ],
+    "moments": {
+      "Comfort": {
+        "day": [
+          "Sipping during a comfort rewatch.",
+          "Cozied up with a good book on a rainy day.",
+          "Treating myself after the appointment I was dreading."
+        ],
+        "moon": [
+          "Getting over that thing that happened.",
+          "Decompressing after a long week.",
+          "Cooking up a loved comfort dinner."
+        ]
+      },
+      "Catching up": {
+        "day": [
+          "A routine sip and yap that lasted hours.",
+          "Checking in after something unexpected.",
+          "A walk-and-talk around the neighborhood."
+        ],
+        "moon": [
+          "Plans that finally made it out of the group chat.",
+          "The same spot as always.",
+          "A long-awaited story time."
+        ]
+      },
+      "Grinding": {
+        "day": [
+          "Searching through endless lecture slides.",
+          "Performatively pretending to study while scrolling.",
+          "On the way to an early morning class."
+        ],
+        "moon": [
+          "The break I deserve after working late.",
+          "Laptop out at the function.",
+          "Trying to forget about that late assignment."
+        ]
+      },
+      "Celebrating": {
+        "day": [
+          "Another year of birthday festivities.",
+          "Someone got the job (it was me).",
+          "A small win that meant something big."
+        ],
+        "moon": [
+          "A birthday excuse to try something new.",
+          "Somehow survived the last exam.",
+          "A regular day that felt like a holiday."
+        ]
+      },
+      "Connecting": {
+        "day": [
+          "Discovering new ways to make me laugh.",
+          "A slow morning where nothing else matters.",
+          "Taking a scenic, romantic stroll."
+        ],
+        "moon": [
+          "Ordering something that sounded impressive.",
+          "Putting myself out there.",
+          "Feeling like we’re the only ones in the room."
+        ]
+      },
+      "Reset": {
+        "day": [
+          "Preparing for the daunting week ahead.",
+          "Debriefing what I remember of a crazy night.",
+          "Gathering ammunition to fight the Sunday scaries."
+        ],
+        "moon": [
+          "Letting go of last week’s lore.",
+          "The weekend out after a long week.",
+          "Work is out of sight, out of mind."
+        ]
+      },
+      "Out & about": {
+        "day": [
+          "Sipping my way through a new neighborhood.",
+          "Visiting a shop I never knew was there.",
+          "Getting to know a new city."
+        ],
+        "moon": [
+          "A big party in a tiny kitchen.",
+          "Belting a song with zero regret.",
+          "Discovering the city by night."
+        ]
+      }
+    },
+    "company": [
+      "Just me",
+      "A date",
+      "My best friend",
+      "The whole crew",
+      "Family",
+      "Classmates / coworkers",
+      "New friends",
+      "A stranger"
+    ],
+    "review": [
+      "Would order again",
+      "Wouldn’t order again",
+      "Someone else’s order",
+      "My usual",
+      "First time",
+      "The company mattered more"
+    ],
+    "copy": {
+      "writeOwn": "Or write your own…",
+      "pickLimit": "You’ve picked 2. Unselect one to choose another.",
+      "pickOne": "Pick one to continue.",
+      "notePrompt": "What would you tell the next person who orders this?",
+      "noteError": "Add a note for the next person.",
+      "signPlaceholder": "First name, initials, or anonymous",
+      "signError": "Add a first name, initials, or “anonymous” to share your story.",
+      "limit": "280 characters max",
+      "privacy": "Your story will be posted publicly on Sip & Tell. Sign as “Anonymous” if you’d rather not share your name. We never ask for your email or contact info.",
+      "failed": "Your story didn’t send. Your answers are still here, so you can try again.",
+      "doneTitle": "Thanks for sharing!",
+      "doneText": "Your story will appear in the archive once it’s been read. Here’s how it will look:",
+      "leaveTitle": "Leave without sharing?",
+      "leaveText": "Your answers won’t be saved if you close this now."
+    }
+  },
+  "emptyStories": {
+    "sentence": "No one has told a {drink} story yet.",
+    "subline": "Once people start sharing, this is where you’ll see when they reach for it, who they’re with, and what it tastes like.",
+    "slot": "Your story could be the first one here.",
+    "slotText": "Where were you? Who were you with? What did it taste like?"
   }
 }

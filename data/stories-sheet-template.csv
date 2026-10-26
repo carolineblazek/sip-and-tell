@@ -1,7 +1,7 @@
-submitted_at,approved,drink_id,space,occasion,moment,tastes_like,company,review,who,where,why,note,signed_as
-2026-10-03T09:12:00Z,TRUE,london-fog,day,Connecting,"Taking a scenic, romantic stroll",A grassy meadow,A date,My usual,,,,Just relaxing and enjoying the day. Get it with vanilla or lavender.,Sarah
-2026-10-02T08:40:00Z,TRUE,london-fog,day,Catching up,A walk-and-talk around the neighborhood,A warm hug,My best friend,Would order again,,,,Usual morning coffee run.,Jared Garelick
-2026-10-01T08:05:00Z,TRUE,london-fog,day,Grinding,On the way to an early morning class,A clear head,Classmates / coworkers,My usual,,,,The only thing that gets me through 8:30 lectures.,Anonymous
-2026-10-03T21:30:00Z,TRUE,margarita,moon,Catching up,Ordering something that sounded impressive,A summer breeze,My best friend,The company mattered more,,,,"I was celebrating life, man. I have genuinely no idea.",PK
-2026-10-02T22:15:00Z,TRUE,margarita,moon,Comfort,Decompressing after a long week,Golden hour,The whole crew,Would order again,,,,"Just queening out. Live it up, mama.",Jared Garelick
-2026-10-01T20:50:00Z,TRUE,margarita,moon,Connecting,A big party in a tiny kitchen,An early night,Family,First time,,,,Nice reunited family gathering. Make sure to mix it well.,Sarah
+submitted_at,approved,drink_id,space,occasion,moment,tastes_like,company,review,note,signed_as
+2026-10-03T09:12:00Z,TRUE,london-fog,day,Connecting,"Taking a scenic, romantic stroll",A grassy meadow,A date,My usual,Just relaxing and enjoying the day. Get it with vanilla or lavender.,Sarah
+2026-10-02T08:40:00Z,TRUE,london-fog,day,Catching up,A walk-and-talk around the neighborhood,A warm hug,My best friend,Would order again,Usual morning coffee run.,Jared Garelick
+2026-10-01T08:05:00Z,TRUE,london-fog,day,Grinding,On the way to an early morning class,A clear head,Classmates / coworkers,My usual,The only thing that gets me through 8:30 lectures.,Anonymous
+2026-10-03T21:30:00Z,TRUE,margarita,moon,Catching up,Ordering something that sounded impressive,A summer breeze,My best friend,The company mattered more,"I was celebrating life, man. I have genuinely no idea.",PK
+2026-10-02T22:15:00Z,TRUE,margarita,moon,Comfort,Decompressing after a long week,Golden hour,The whole crew,Would order again,"Just queening out. Live it up, mama.",Jared Garelick
+2026-10-01T20:50:00Z,TRUE,margarita,moon,Connecting,A big party in a tiny kitchen,An early night,Family,First time,Nice reunited family gathering. Make sure to mix it well.,Sarah

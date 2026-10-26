@@ -68,6 +68,17 @@
     return `<em>${esc(s.moment)}</em>${company} that tasted like <em>${esc(lower(s.tastesLike))}</em>.`;
   }
 
+  function storyCard(site, d, s) {
+    return `
+      <li class="story-card card">
+        <div class="story-top"><span class="t-meta accent">${esc(s.occasion)}</span>${markImg(d, 'story-mark')}</div>
+        <p class="story-text t-body">${storySentence(site, d, s)}</p>
+        ${s.note ? `<p class="t-body">“${esc(s.note)}”</p>` : ''}
+        <hr class="rule">
+        <div class="story-bottom"><span class="signed t-inline-italic accent">— ${esc(s.signedAs)}</span><span class="t-meta muted">${esc(s.review)}</span></div>
+      </li>`;
+  }
+
   /* ---------- shared chrome ---------- */
 
   function header(site, drinks) {
@@ -217,7 +228,7 @@
             <p class="t-body">${esc(d.intro)}</p>
             <ul class="tags">${tags.map((t, k) => `<li class="tag tag-${k}">${esc(t)}</li>`).join('')}</ul>
             <div class="button-row">
-              <a class="btn btn-secondary btn-small" href="${drinkUrl(d, '#stories')}">${plural(st.length, 'story')}</a>
+              <a class="btn btn-secondary btn-small" href="${drinkUrl(d, '#stories')}">${st.length ? plural(st.length, 'story') : 'No stories yet'}</a>
               <a class="btn btn-primary btn-small" href="${drinkUrl(d, '#recipe')}">View recipe →</a>
             </div>
           </div>
@@ -296,6 +307,9 @@
     document.title = `${d.name} / Sip & Tell`;
     const st = d.stories;
     const versions = Object.entries(d.recipe.versions);
+    const empty = !st.length;
+    const es = site.emptyStories;
+    const hasCard = ['london-fog', 'margarita'].includes(d.id); // static cards until the live download lands
 
     const qBlock = (label, key) => {
       const rows = tally(st, key);
@@ -329,7 +343,9 @@
               <span><span class="t-meta muted">Served</span><span class="t-meta">${esc(d.served.join(' / '))}</span></span>
             </dd></div>
           </dl>
-          <a class="btn btn-primary btn-wide" href="#stories">See community stories about this drink ↓</a>
+          ${empty
+            ? `<button class="btn btn-primary btn-wide" type="button" data-action="add-story" data-drink="${d.id}">Be the first to share a story +</button>`
+            : '<a class="btn btn-primary btn-wide" href="#stories">See community stories about this drink ↓</a>'}
         </div>
         <div class="mark-card">
           <img src="${asset(`illustrations/${d.id}-1200.webp`)}" srcset="${asset(`illustrations/${d.id}-600.webp`)} 600w, ${asset(`illustrations/${d.id}-1200.webp`)} 1200w" sizes="(min-width: 900px) 560px, 90vw" alt="Illustration of a ${esc(d.name)}">
@@ -339,7 +355,7 @@
       <section class="recipe" id="recipe" aria-labelledby="recipe-title">
         <div class="section-head">
           <h2 id="recipe-title" class="t-header">Recipe</h2>
-          <a class="btn btn-primary btn-small" id="download-recipe" href="${asset(`recipe-cards/${d.id}-web.jpg`)}" download="sip-and-tell-${d.id}.jpg">Download recipe ↓</a>
+          ${hasCard ? `<a class="btn btn-primary btn-small" id="download-recipe" href="${asset(`recipe-cards/${d.id}-web.jpg`)}" download="sip-and-tell-${d.id}.jpg">Download recipe ↓</a>` : ''}
         </div>
         <div class="recipe-card card" id="recipe-card">
           <div class="recipe-top">
@@ -363,8 +379,14 @@
       <section class="people" aria-labelledby="people-title">
         <div class="section-head">
           <h2 id="people-title" class="t-header">What people say</h2>
-          <p class="t-meta muted">Based on ${plural(st.length, 'story')}</p>
+          <p class="t-meta muted">${empty ? 'No stories yet' : `Based on ${plural(st.length, 'story')}`}</p>
         </div>
+        ${empty ? `
+        <div class="people-card card">
+          <p class="t-header">${esc(es.sentence.replace('{drink}', d.name))}</p>
+          <p class="t-header-italic accent">${esc(es.subline)}</p>
+          <button class="btn btn-primary btn-small" type="button" data-action="add-story" data-drink="${d.id}">Add the first story +</button>
+        </div>` : `
         <div class="people-card card">
           <p class="t-header">${summarySentence(site, d)}</p>
           <button class="btn btn-primary btn-small" type="button" aria-expanded="false" aria-controls="answers" id="answers-toggle">See all answers ↓</button>
@@ -374,23 +396,25 @@
             ${qBlock('This drink tastes like…', 'tastesLike')}
             ${qBlock('Who’s at the table?', 'company')}
           </div>
-        </div>
+        </div>`}
       </section>
 
       <section class="archive" id="stories" aria-labelledby="stories-title">
         <div class="section-head">
           <h2 id="stories-title" class="t-header">Story Archive</h2>
-          <button class="btn btn-primary btn-small" type="button" data-action="add-story">Add your story +</button>
+          <button class="btn btn-primary btn-small" type="button" data-action="add-story" data-drink="${d.id}">Add your story +</button>
         </div>
         <ul class="stories" tabindex="0" aria-label="Stories, scroll sideways for more">
-          ${st.map((s) => `
-            <li class="story-card card">
-              <div class="story-top"><span class="t-meta accent">${esc(s.occasion)}</span>${markImg(d, 'story-mark')}</div>
-              <p class="story-text t-body">${storySentence(site, d, s)}</p>
-              ${s.note ? `<p class="t-body">“${esc(s.note)}”</p>` : ''}
-              <hr class="rule">
-              <div class="story-bottom"><span class="signed t-inline-italic accent">— ${esc(s.signedAs)}</span><span class="t-meta muted">${esc(s.review)}</span></div>
-            </li>`).join('')}
+          ${empty ? `
+            <li class="story-card card story-slot">
+              <div class="story-top"><span class="t-meta muted">Story 01</span>${markImg(d, 'story-mark')}</div>
+              <p class="t-inline-italic">${esc(es.slot)}</p>
+              <p class="t-body muted">${esc(es.slotText)}</p>
+              <button class="btn btn-secondary btn-small" type="button" data-action="add-story" data-drink="${d.id}">Add your story +</button>
+            </li>
+            <li class="story-card story-placeholder" aria-hidden="true"></li>
+            <li class="story-card story-placeholder" aria-hidden="true"></li>`
+          : st.map((s) => storyCard(site, d, s)).join('')}
         </ul>
       </section>`;
   }
@@ -427,6 +451,7 @@
 
     const toggle = document.getElementById('answers-toggle');
     const answers = document.getElementById('answers');
+    if (!toggle) return;
     toggle.addEventListener('click', () => {
       const open = toggle.getAttribute('aria-expanded') === 'true';
       toggle.setAttribute('aria-expanded', String(!open));
@@ -477,22 +502,288 @@
       </section>`;
   }
 
+
+  /* ---------- approved stories from the Google Sheet ---------- */
+
+  const CACHE_KEY = 'sipandtell-stories';
+  const CACHE_MS = 5 * 60 * 1000;
+
+  async function loadApproved(endpoint) {
+    try {
+      const cached = JSON.parse(sessionStorage.getItem(CACHE_KEY) || 'null');
+      if (cached && Date.now() - cached.at < CACHE_MS) return cached.stories;
+    } catch (e) { /* storage can be blocked; just fetch */ }
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), 5000);
+    try {
+      const json = await fetch(endpoint, { signal: ctrl.signal }).then((r) => r.json());
+      if (!json.ok || !Array.isArray(json.stories)) throw new Error('Unexpected response');
+      try { sessionStorage.setItem(CACHE_KEY, JSON.stringify({ at: Date.now(), stories: json.stories })); } catch (e) { /* ignore */ }
+      return json.stories;
+    } catch (e) {
+      console.warn('Approved stories unavailable, using drinks.json', e);
+      return null;
+    } finally {
+      clearTimeout(timer);
+    }
+  }
+
+  // The sheet is the source of truth when it answers; drinks.json stories are the fallback.
+  function applyStories(drinks, stories) {
+    if (!stories) return;
+    drinks.forEach((d) => { d.stories = stories.filter((s) => s.drinkId === d.id); });
+  }
+
+  /* ---------- story questionnaire ---------- */
+
+  function questionnaire(site, drinks) {
+    const Q = site.questionnaire;
+    const C = Q.copy;
+    const own = drinks.filter((d) => d.space === SPACE);
+    const tastes = site.spaces[SPACE].ticker;
+    const dlg = document.createElement('dialog');
+    dlg.className = 'q-dialog';
+    dlg.setAttribute('aria-labelledby', 'q-title');
+    document.body.appendChild(dlg);
+
+    let st, step, showErr, sending, failed, confirmLeave, touched, opener;
+    const fresh = (drink) => ({ drink: drink || null, occasion: null, moments: [], own: '', tastes: null, company: null, review: null, note: '', sign: '', website: '' });
+    const hint = (h) => esc(h).replace(/\[(.+?)\]/g, '<span class="accent">$1</span>');
+    const current = () => drinks.find((d) => d.id === st.drink);
+    const picks = () => st.moments.length + (st.own.trim() ? 1 : 0);
+    const stripDot = (m) => m.trim().replace(/\.$/, '');
+
+    function momentText() {
+      const all = [...st.moments, st.own].map((m) => stripDot(m)).filter(Boolean);
+      return all.length > 1 ? `${all[0]}, and ${lower(all[1])}` : (all[0] || '');
+    }
+
+    function valid(i = step) {
+      if (i === 0) return !!st.drink;
+      if (i === 1) return !!st.occasion && picks() > 0;
+      if (i === 2) return !!st.tastes;
+      if (i === 3) return !!st.company;
+      if (i === 4) return !!st.review;
+      if (i === 5) return !!st.note.trim() && !!st.sign.trim();
+      return true;
+    }
+
+    const err = () => (showErr && !valid() ? ' is-error' : '');
+    const chips = (group, list, selected) => `<div class="chips">${list.map((v) => `<button type="button" class="chip${err()}" aria-pressed="${selected === v}" data-${group}="${esc(v)}">${esc(v)}</button>`).join('')}</div>`;
+
+    function body() {
+      if (step === 0) {
+        return `<div class="q-drinks">${own.map((d) => `<button type="button" class="q-drink-card${err()}" aria-pressed="${st.drink === d.id}" data-pick="${d.id}">${markImg(d, 'q-drink-mark')}<span class="t-meta">${esc(d.name)}</span></button>`).join('')}</div>`;
+      }
+      if (step === 1) {
+        const full = picks() >= 2;
+        const moments = st.occasion ? Q.moments[st.occasion][SPACE] : [];
+        return `${chips('occasion', site.occasions, st.occasion)}
+          ${st.occasion ? `<div class="q-options">
+            ${moments.map((m) => { const on = st.moments.includes(m); return `<button type="button" class="q-option" aria-pressed="${on}" data-moment="${esc(m)}"${!on && full ? ' disabled' : ''}><span class="q-dot" aria-hidden="true"></span><span class="t-body">${esc(m)}</span></button>`; }).join('')}
+            <label class="q-own"><span class="visually-hidden">Write your own moment</span>
+              <input type="text" maxlength="80" placeholder="${esc(C.writeOwn)}" value="${esc(st.own)}" data-field="own"${!st.own.trim() && full ? ' disabled' : ''}>
+              <span class="t-meta q-count" data-count="own">${st.own.length} / 80</span></label>
+            <p class="q-note t-body" data-limit-note${full ? '' : ' hidden'}>${esc(C.pickLimit)}</p>
+          </div>` : ''}`;
+      }
+      if (step === 2) return chips('tastes', tastes, st.tastes);
+      if (step === 3) return chips('company', Q.company, st.company);
+      if (step === 4) return chips('review', Q.review, st.review);
+      const noteErr = showErr && !st.note.trim();
+      const signErr = showErr && !st.sign.trim();
+      return `${failed ? `<p class="q-banner t-body" role="alert">${esc(C.failed)}</p>` : ''}
+        <label class="q-field${noteErr ? ' is-error' : ''}">
+          <span class="t-meta muted">Note / <span class="accent">Required</span></span>
+          <textarea rows="3" maxlength="280" placeholder="${esc(C.notePrompt)}" data-field="note">${esc(st.note)}</textarea>
+          <span class="t-meta q-count" data-count="note">${st.note.length} / 280</span>
+        </label>
+        ${noteErr ? `<p class="q-error-msg t-body" role="alert">${esc(C.noteError)}</p>` : ''}
+        <label class="q-field${signErr ? ' is-error' : ''}">
+          <span class="t-meta muted">Sign as / <span class="accent">Required</span></span>
+          <input type="text" maxlength="40" placeholder="${esc(C.signPlaceholder)}" value="${esc(st.sign)}" data-field="sign" autocomplete="off">
+        </label>
+        ${signErr ? `<p class="q-error-msg t-body" role="alert">${esc(C.signError)}</p>` : ''}
+        <p class="t-meta muted">${esc(C.limit)}</p>
+        <p class="t-body muted">${esc(C.privacy)}</p>
+        <label class="q-honeypot" aria-hidden="true">Website <input type="text" tabindex="-1" autocomplete="off" data-field="website"></label>`;
+    }
+
+    const qTop = (withCount) => {
+      const d = current();
+      return `
+        <div class="q-top">
+          <span class="q-drink">${d ? markImg(d, 'q-top-mark') : ''}<span class="t-meta"><span class="q-wide">Add your story / </span>${esc(d ? d.name : 'Add your story')}</span></span>
+          <span class="q-meta">${withCount ? `<span class="t-meta muted">${step + 1} / 6</span>` : ''}<button type="button" class="q-close" data-q="close" aria-label="Close">✕</button></span>
+        </div>`;
+    };
+
+    const leave = () => `
+      <div class="q-leave">
+        <div class="q-leave-card" role="alertdialog" aria-labelledby="q-leave-title" aria-describedby="q-leave-text">
+          <h3 id="q-leave-title" class="t-header">${esc(C.leaveTitle)}</h3>
+          <p id="q-leave-text" class="t-body">${esc(C.leaveText)}</p>
+          <div class="button-row"><button type="button" class="btn btn-secondary" data-q="leave">Leave</button><button type="button" class="btn btn-primary" data-q="stay">Keep going</button></div>
+        </div>
+      </div>`;
+
+    function render(focusTitle) {
+      const d = current();
+      if (step === 6) {
+        const story = { occasion: st.occasion, moment: momentText(), tastesLike: st.tastes, company: st.company, review: st.review, note: st.note.trim(), signedAs: st.sign.trim() };
+        dlg.innerHTML = `
+          <div class="q-card">
+            ${qTop(false)}
+            <div class="q-question"><h2 id="q-title" class="t-header" tabindex="-1">${esc(C.doneTitle)}</h2><p class="t-body">${esc(C.doneText)}</p></div>
+            <ul class="q-preview">${storyCard(site, d, story)}</ul>
+            <div class="q-nav q-nav-end">
+              <button type="button" class="btn btn-secondary" data-q="again">Add another</button>
+              <button type="button" class="btn btn-primary" data-q="to-drink">${d.published ? 'Back to the drink' : 'Back to the menu'}</button>
+            </div>
+          </div>`;
+      } else {
+        const s = Q.steps[step];
+        const label = step === 5 ? (sending ? 'Sending…' : failed ? 'Try again' : 'Submit story') : 'Next →';
+        dlg.innerHTML = `
+          <div class="q-card">
+            ${qTop(true)}
+            <ol class="q-progress" aria-label="Step ${step + 1} of 6">${Q.steps.map((_, i) => `<li class="${i <= step ? 'is-done' : ''}"></li>`).join('')}</ol>
+            <div class="q-question"><h2 id="q-title" class="t-header" tabindex="-1">${esc(s.title)}</h2><p class="t-meta muted">${hint(s.hint)}</p></div>
+            <div class="q-body">${body()}</div>
+            ${showErr && !valid() && step < 5 ? `<p class="q-error-msg t-body" role="alert">${esc(C.pickOne)}</p>` : ''}
+            <div class="q-nav">
+              ${step > 0 ? '<button type="button" class="btn btn-secondary" data-q="back">← Back</button>' : '<span></span>'}
+              <button type="button" class="btn btn-primary" data-q="next" aria-disabled="${!valid() || sending}">${label}</button>
+            </div>
+            ${confirmLeave ? leave() : ''}
+          </div>`;
+      }
+      if (confirmLeave) dlg.querySelector('[data-q="stay"]').focus();
+      else if (focusTitle) dlg.querySelector('#q-title').focus();
+    }
+
+    function open(drinkId) {
+      opener = document.activeElement;
+      st = fresh(drinkId || null);
+      step = 0; showErr = false; sending = false; failed = false; confirmLeave = false; touched = false;
+      render(false);
+      dlg.showModal();
+      dlg.querySelector('#q-title').focus();
+    }
+
+    function close() {
+      dlg.close();
+      if (opener && opener.focus) opener.focus();
+    }
+
+    function requestClose() {
+      if (touched && step < 6) { confirmLeave = true; render(); } else close();
+    }
+
+    async function submit() {
+      sending = true; failed = false; render();
+      const payload = {
+        drink_id: st.drink, occasion: st.occasion, moment: momentText(), tastes_like: st.tastes,
+        company: st.company, review: st.review, note: st.note.trim(), signed_as: st.sign.trim(), website: st.website,
+      };
+      try {
+        // Sent as plain text so the browser makes a simple request with no CORS preflight.
+        const json = await fetch(site.storiesEndpoint, { method: 'POST', body: JSON.stringify(payload) }).then((r) => r.json());
+        if (!json.ok) throw new Error(json.error || 'Not saved');
+        sending = false; step = 6; render(true);
+      } catch (e) {
+        console.error(e);
+        sending = false; failed = true; render();
+      }
+    }
+
+    dlg.addEventListener('cancel', (e) => { e.preventDefault(); if (confirmLeave) { confirmLeave = false; render(); } else requestClose(); });
+
+    dlg.addEventListener('click', (e) => {
+      const t = e.target.closest('button');
+      if (!t || t.disabled) return;
+      const q = t.dataset.q;
+      if (q === 'close') return requestClose();
+      if (q === 'leave') return close();
+      if (q === 'stay') { confirmLeave = false; return render(); }
+      if (q === 'back') { step -= 1; showErr = false; return render(true); }
+      if (q === 'again') { st = fresh(st.drink); step = 0; touched = false; return render(true); }
+      if (q === 'to-drink') {
+        const d = current();
+        if (!d.published) { location.href = pageUrl(SPACE, 'index.html', '#menu'); return; }
+        if (PAGE === 'drink' && new URLSearchParams(location.search).get('d') === d.id) { close(); document.getElementById('stories')?.scrollIntoView(); return; }
+        location.href = drinkUrl(d);
+        return;
+      }
+      if (q === 'next') {
+        if (sending) return;
+        if (!valid()) { showErr = true; return render(); }
+        showErr = false;
+        if (step === 5) return submit();
+        step += 1;
+        return render(true);
+      }
+      touched = true;
+      if (t.dataset.pick) { st.drink = t.dataset.pick; }
+      else if (t.dataset.occasion) { if (st.occasion !== t.dataset.occasion) { st.occasion = t.dataset.occasion; st.moments = []; } }
+      else if (t.dataset.moment) {
+        const m = t.dataset.moment;
+        st.moments = st.moments.includes(m) ? st.moments.filter((x) => x !== m) : (picks() < 2 ? [...st.moments, m] : st.moments);
+      }
+      else if (t.dataset.tastes) st.tastes = t.dataset.tastes;
+      else if (t.dataset.company) st.company = t.dataset.company;
+      else if (t.dataset.review) st.review = t.dataset.review;
+      else return;
+      if (showErr && valid()) showErr = false;
+      render();
+    });
+
+    // Typing updates the answer in place so the field keeps focus.
+    dlg.addEventListener('input', (e) => {
+      const f = e.target.dataset.field;
+      if (!f) return;
+      touched = true;
+      st[f] = e.target.value;
+      const count = dlg.querySelector(`[data-count="${f}"]`);
+      if (count) {
+        const max = f === 'note' ? 280 : 80;
+        count.textContent = `${st[f].length} / ${max}`;
+        count.classList.toggle('is-limit', st[f].length >= max);
+      }
+      if (f === 'own') {
+        const full = picks() >= 2;
+        dlg.querySelectorAll('.q-option').forEach((b) => { b.disabled = full && b.getAttribute('aria-pressed') !== 'true'; });
+        const note = dlg.querySelector('[data-limit-note]');
+        if (note) note.hidden = !full;
+      }
+      const next = dlg.querySelector('[data-q="next"]');
+      if (next) next.setAttribute('aria-disabled', String(!valid() || sending));
+    });
+
+    return { open };
+  }
+
   /* ---------- boot ---------- */
 
   async function boot() {
     try {
       const [site, data] = await Promise.all([
-        fetch(`${ROOT}/data/site.json`).then((r) => r.json()),
-        fetch(`${ROOT}/data/drinks.json`).then((r) => r.json()),
+        // no-cache: always check with the server, so edits to the data show up right away
+        fetch(`${ROOT}/data/site.json`, { cache: 'no-cache' }).then((r) => r.json()),
+        fetch(`${ROOT}/data/drinks.json`, { cache: 'no-cache' }).then((r) => r.json()),
       ]);
       site.units = data.units;
       const drinks = data.drinks;
+      if (site.storiesEndpoint) applyStories(drinks, await loadApproved(site.storiesEndpoint));
       const body = PAGE === 'drink' ? renderDrink(site, drinks) : PAGE === 'about' ? renderAbout(site, drinks) : renderHome(site, drinks);
       app.innerHTML = `${header(site, drinks)}<main id="main" class="page page-${PAGE}">${body}</main>${footer(site)}`;
       if (PAGE === 'home') wireMenu(site, drinks);
       if (PAGE === 'drink') wireDrink(site, drinks);
-      // The questionnaire arrives in pass two.
-      document.querySelectorAll('[data-action="add-story"]').forEach((b) => b.addEventListener('click', () => alert('The story questionnaire is coming in the next build.')));
+      const story = questionnaire(site, drinks);
+      app.addEventListener('click', (e) => {
+        const b = e.target.closest('[data-action="add-story"]');
+        if (b) story.open(b.dataset.drink);
+      });
       if (location.hash) document.getElementById(location.hash.slice(1))?.scrollIntoView();
     } catch (err) {
       console.error(err);

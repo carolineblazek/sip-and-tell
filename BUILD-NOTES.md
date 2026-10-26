@@ -42,10 +42,12 @@ Figma: "Recipe JPEG / Web / …" (under the desktop recipe components) and "Reci
 
 ## Story submissions → Google Sheet (for now)
 - The questionnaire POSTs to a Google Apps Script web app, which appends a row to a Google Sheet. Columns are in `data/stories-sheet-template.csv`.
+- Script: `scripts/stories-apps-script.gs` (paste into the sheet's Extensions → Apps Script, deploy as a web app: execute as Me, access Anyone). The site POSTs JSON as plain text (no preflight) and GETs `?drink=<id>` for approved stories.
 - New rows come in with `approved = FALSE`. Caroline sets rows to `TRUE` to publish them.
 - The site reads approved stories from the same Apps Script (GET, JSON). Cache them so page loads stay fast.
 - Later: move to a database (Supabase or Firebase) when we want instant publishing or moderation tools. The row shape stays the same.
 - Privacy: no email or contact fields. The Story step says stories are public and that "Anonymous" is fine.
+- Story step (step 6) asks for two things, both required: a **note** ("What would you tell the next person who orders this?", 280 characters max) and **Sign as**. Submit validates both. There are no who/where/why fields.
 
 ## Not built yet
 - Mobile (390) and tablet (768) layouts: Figma mockups in progress.
