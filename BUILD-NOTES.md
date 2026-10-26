@@ -5,7 +5,7 @@ Decisions for the HTML build. The Figma file is "Drink Microsite"; refined scree
 ## Spaces and opening hours
 - The Day Café is open 6AM–6PM and The Moon Saloon 6PM–6AM, in the visitor's local time.
 - When the site loads with no space in the URL, send the visitor to whichever space is open right now.
-- The two-door switch in the header still lets anyone cross over at any time. Each space has its own URL, so links and the back button work.
+- The two-door switch in the header still lets anyone cross over at any time. Each space has its own URL, so links and the back button work. From a drink page the switch goes to the other space's home.
 - Colors are set with `data-space="day"` or `data-space="moon"` on `<html>` (see `tokens.css`).
 
 ## Color
@@ -24,6 +24,7 @@ Decisions for the HTML build. The Figma file is "Drink Microsite"; refined scree
   - If one answer leads each question: "Most people reach for a {drink} while {occasion}, {company phrase}, and say it tastes like {taste}."
   - If there's no clear favorite (a tie at the top): "So far, people have reached for a {drink} {occasion 1}, {occasion 2}, and {occasion 3}."
 - Ties in "today's special" (the hero rows, popup tags and highlighted ticker item) go to the most recent story.
+- The "tastes like…" ticker: each published drink in the space with stories claims its top taste (the special first). Those tastes are outlined pills that swap the hero to that drink; the picked one is solid. The rest scroll by as plain text. A non-special hero is labeled "Also brewing today" / "Also pouring tonight".
 - Zero stories: use the "No stories yet" layouts (Figma: "Drink Page: … / No stories yet").
 - Story links such as "See community stories" and "3 stories shared" go to `drink-page#stories`.
 
@@ -39,6 +40,7 @@ Figma: "Recipe JPEG / Web / …" (under the desktop recipe components) and "Reci
 - **Mobile**: 540 × 810 layout, saved at 1080 × 1620 (2:3 portrait). Logo row, then the illustration card (it takes whatever height is left), then mark + name, setting, ingredients, method and footer.
 - The JPEG always reflects the reader's current version, units and serving count.
 - Build approach: render a hidden copy of this layout at 2× with `html2canvas` / `modern-screenshot`, then download it as `sip-and-tell-{drink}-{version}-{units}-serves-{n}.jpg`. Use the web layout above 768px and the mobile layout below it.
+- **Current build:** downloads serve the exported cards in `assets/recipe-cards/{drink}-{web|mobile}.jpg` (first version / oz / serves 1), picking the mobile card below 768px. Drinks without an exported card (Cosmopolitan for now) show no download button. The live render above is a possible later upgrade.
 
 ## Story submissions → Google Sheet (for now)
 - The questionnaire POSTs to a Google Apps Script web app, which appends a row to a Google Sheet. Columns are in `data/stories-sheet-template.csv`.

@@ -20,7 +20,8 @@
   const lower = (s) => s.charAt(0).toLowerCase() + s.slice(1);
 
   // "[study groups]" in copy becomes an underlined accent link
-  const linked = (text, href) => esc(text).replace(/\[(.+?)\]/g, (_, w) => href ? `<a class="inline-link" href="${href}">${w}</a>` : `<span class="inline-link">${w}</span>`);
+  const linked = (text, href, action) => esc(text).replace(/\[(.+?)\]/g, (_, w) => action ? `<button type="button" class="inline-link" data-action="${action}">${w}</button>`
+    : href ? `<a class="inline-link" href="${href}">${w}</a>` : `<span class="inline-link">${w}</span>`);
 
   const PLURALS = { story: 'stories', match: 'matches' };
   const plural = (n, word) => `${n} ${n === 1 ? word : (PLURALS[word] || `${word}s`)}`;
@@ -83,11 +84,8 @@
 
   function header(site, drinks) {
     const sp = site.spaces;
-    // The switch goes to the same page in the other space. From a drink page, that is the other space's special.
-    const otherHref = (space) => {
-      if (PAGE === 'drink') return drinkUrl(drinks.find((d) => d.id === sp[space].special));
-      return pageUrl(space, PAGE === 'about' ? 'about.html' : 'index.html');
-    };
+    // The switch goes to the same page in the other space. From a drink page, that is the other space's home.
+    const otherHref = (space) => pageUrl(space, PAGE === 'about' ? 'about.html' : 'index.html');
     const door = (space) => {
       const open = space === SPACE;
       const label = sp[space].short;
@@ -100,7 +98,7 @@
       <header class="site-header">
         <div class="header-row">
           <a class="logo" href="${pageUrl(SPACE, 'index.html')}" aria-label="Sip &amp; Tell home">
-            <img src="${asset('brand/eclipse.svg')}" alt="" width="55" height="40"><span class="wordmark">Sip &amp; Tell</span>
+            ${site.logoSvg || `<img src="${asset('brand/eclipse.svg')}" alt="" width="55" height="40">`}<span class="wordmark">Sip &amp; Tell</span>
           </a>
           <nav class="site-nav" aria-label="Main">
             <a class="text-link" href="${pageUrl(SPACE, 'index.html', '#menu')}">Menu</a>
@@ -135,54 +133,88 @@
 
   /* ---------- home ---------- */
 
+  // Every published drink in this space whose top "tastes like" answer can lead the hero. The special claims its taste first.
+  function heroTastes(site, drinks) {
+    const sp = site.spaces[SPACE];
+    const special = drinks.find((d) => d.id === sp.special);
+    const others = drinks.filter((d) => d.space === SPACE && d.published && d.stories.length && d !== special)
+      .sort((a, b) => b.stories.length - a.stories.length);
+    const map = new Map();
+    [special, ...others].forEach((d) => {
+      const t = top(d.stories, 'tastesLike');
+      if (t && !map.has(t)) map.set(t, d);
+    });
+    return map;
+  }
+
+  function heroStage(d) {
+    return `
+        <a class="stage" href="${drinkUrl(d)}" aria-label="See the ${esc(d.name)}">
+          <span class="arch"></span>
+          <img class="stage-illo" src="${asset(`illustrations/${d.id}-600.webp`)}" srcset="${asset(`illustrations/${d.id}-600.webp`)} 600w, ${asset(`illustrations/${d.id}-1200.webp`)} 1200w" sizes="(min-width: 900px) 380px, 80vw" alt="Illustration of a ${esc(d.name)}">
+        </a>`;
+  }
+
+  function heroSpecial(site, d) {
+    const sp = site.spaces[SPACE];
+    const st = d.stories;
+    return `
+        <div class="special">
+          <p class="t-meta muted">${esc(d.id === sp.special ? sp.specialLabel : sp.alsoLabel)}</p>
+          <h2 class="special-name t-header">${markImg(d)}<span>${esc(d.name)}</span></h2>
+          <p class="t-inline-italic accent">${esc(d.intro)}</p>
+          <hr class="rule">
+          <dl class="leader-list">
+            <div><dt>Tastes like</dt><dd>${esc(top(st, 'tastesLike'))}</dd></div>
+            <div><dt>Sipped while</dt><dd>${esc(top(st, 'occasion'))}</dd></div>
+            <div><dt>In the company of</dt><dd>${esc(top(st, 'company'))}</dd></div>
+          </dl>
+          <div class="button-row">
+            <a class="btn btn-primary" href="${drinkUrl(d)}">See the drink →</a>
+            <a class="btn btn-secondary" href="${drinkUrl(d, '#stories')}">${plural(st.length, 'story')} shared</a>
+          </div>
+        </div>`;
+  }
+
   function renderHome(site, drinks) {
     const sp = site.spaces[SPACE];
     const special = drinks.find((d) => d.id === sp.special);
-    const st = special.stories;
-    const taste = top(st, 'tastesLike'), occ = top(st, 'occasion'), company = top(st, 'company');
-    const ticker = [taste, ...sp.ticker.filter((t) => t !== taste)];
-    const tickerItems = (aria) => ticker.map((t, i) => i === 0
-      ? `<li class="ticker-pill">${esc(t)}</li>`
-      : `<li aria-hidden="${aria}"><span class="sep" aria-hidden="true">/</span>${esc(t)}</li>`).join('');
+    const heroes = heroTastes(site, drinks);
+    const current = top(special.stories, 'tastesLike');
+    // Tastes with a hero come first and can be picked; the rest scroll by as plain text
+    const ticker = [...heroes.keys(), ...sp.ticker.filter((t) => !heroes.has(t))];
+    const tickerItems = (copy) => ticker.map((t) => {
+      const d = heroes.get(t);
+      const item = d
+        ? `<button type="button" class="ticker-pick" aria-pressed="${t === current}" data-hero="${d.id}"${copy ? ' tabindex="-1"' : ''}>${esc(t)}</button>`
+        : `<span>${esc(t)}</span>`;
+      return `<li>${item}<span class="sep" aria-hidden="true">/</span></li>`;
+    }).join('');
     const icon = `<img class="title-icon" src="${asset(`brand/${sp.icon}.svg`)}" alt="" width="70" height="70">`;
 
     return `
       <section class="hero" aria-labelledby="space-title">
         <div class="welcome">
-          <h1 id="space-title" class="t-location">
-            <span class="title-line">${esc(sp.title[0])}</span>
-            <span class="title-line">${esc(sp.title[1])} ${icon}</span>
-          </h1>
-          <p class="greeting t-header-italic">${esc(sp.greeting)}</p>
-          <p class="t-body">${esc(sp.intro)}</p>
+          <div class="welcome-text">
+            <h1 id="space-title" class="t-location">
+              <span class="title-line">${esc(sp.title[0])}</span>
+              <span class="title-line">${esc(sp.title[1])} ${icon}</span>
+            </h1>
+            <p class="greeting t-header-italic">${esc(sp.greeting)}</p>
+            <p class="t-body">${esc(sp.intro)}</p>
+          </div>
           <div class="button-row">
             <a class="btn btn-primary" href="#menu">See the menu ↓</a>
             <button class="btn btn-secondary" type="button" data-action="add-story">Add your story +</button>
           </div>
         </div>
-        <a class="stage" href="${drinkUrl(special)}" aria-label="See the ${esc(special.name)}">
-          <span class="arch"></span>
-          <img class="stage-illo" src="${asset(`illustrations/${special.id}-600.webp`)}" srcset="${asset(`illustrations/${special.id}-600.webp`)} 600w, ${asset(`illustrations/${special.id}-1200.webp`)} 1200w" sizes="(min-width: 900px) 380px, 80vw" alt="Illustration of a ${esc(special.name)}">
-        </a>
-        <div class="special">
-          <p class="t-meta muted">${esc(sp.specialLabel)}</p>
-          <h2 class="special-name t-header">${markImg(special)}<span>${esc(special.name)}</span></h2>
-          <hr class="rule">
-          <dl class="leader-list">
-            <div><dt>Tastes like</dt><dd>${esc(taste)}</dd></div>
-            <div><dt>Sipped while</dt><dd>${esc(occ)}</dd></div>
-            <div><dt>In the company of</dt><dd>${esc(company)}</dd></div>
-          </dl>
-          <div class="button-row">
-            <a class="btn btn-primary" href="${drinkUrl(special)}">See the drink →</a>
-            <a class="btn btn-secondary" href="${drinkUrl(special, '#stories')}">${plural(st.length, 'story')} shared</a>
-          </div>
-        </div>
+        ${heroStage(special)}
+        ${heroSpecial(site, special)}
       </section>
 
       <section class="ticker" aria-label="Tastes like">
         <p class="ticker-label t-header-italic">tastes like…</p>
-        <div class="ticker-track"><ul class="ticker-list">${tickerItems('false')}</ul><ul class="ticker-list" aria-hidden="true">${tickerItems('true')}</ul></div>
+        <div class="ticker-track"><ul class="ticker-list">${tickerItems(false)}</ul><ul class="ticker-list" aria-hidden="true">${tickerItems(true)}</ul></div>
       </section>
 
       <section class="statement">
@@ -235,6 +267,20 @@
           <a class="pop-illo" href="${drinkUrl(d)}" tabindex="-1" aria-hidden="true"><img src="${asset(`illustrations/${d.id}-600.webp`)}" alt=""></a>
         </div>
       </li>`;
+  }
+
+  // Picking a taste in the ticker swaps the hero to the drink people say tastes like that
+  function wireHero(site, drinks) {
+    const ticker = document.querySelector('.ticker');
+    if (!ticker) return;
+    ticker.addEventListener('click', (e) => {
+      const b = e.target.closest('.ticker-pick');
+      if (!b || b.getAttribute('aria-pressed') === 'true') return;
+      const d = drinks.find((x) => x.id === b.dataset.hero);
+      document.querySelector('.hero .stage').outerHTML = heroStage(d);
+      document.querySelector('.hero .special').outerHTML = heroSpecial(site, d);
+      ticker.querySelectorAll('.ticker-pick').forEach((p) => p.setAttribute('aria-pressed', String(p.dataset.hero === d.id)));
+    });
   }
 
   function wireMenu(site, drinks) {
@@ -309,7 +355,8 @@
     const versions = Object.entries(d.recipe.versions);
     const empty = !st.length;
     const es = site.emptyStories;
-    const hasCard = ['london-fog', 'margarita'].includes(d.id); // static cards until the live download lands
+    const hasCard = ['london-fog', 'margarita'].includes(d.id); // drinks with an exported recipe card
+    const cardSize = matchMedia('(max-width: 767px)').matches ? 'mobile' : 'web';
 
     const qBlock = (label, key) => {
       const rows = tally(st, key);
@@ -355,7 +402,7 @@
       <section class="recipe" id="recipe" aria-labelledby="recipe-title">
         <div class="section-head">
           <h2 id="recipe-title" class="t-header">Recipe</h2>
-          ${hasCard ? `<a class="btn btn-primary btn-small" id="download-recipe" href="${asset(`recipe-cards/${d.id}-web.jpg`)}" download="sip-and-tell-${d.id}.jpg">Download recipe ↓</a>` : ''}
+          ${hasCard ? `<a class="btn btn-primary btn-small" id="download-recipe" href="${asset(`recipe-cards/${d.id}-${cardSize}.jpg`)}" download="sip-and-tell-${d.id}.jpg">Download recipe ↓</a>` : ''}
         </div>
         <div class="recipe-card card" id="recipe-card">
           <div class="recipe-top">
@@ -390,12 +437,12 @@
         <div class="people-card card">
           <p class="t-header">${summarySentence(site, d)}</p>
           <button class="btn btn-primary btn-small" type="button" aria-expanded="false" aria-controls="answers" id="answers-toggle">See all answers ↓</button>
-          <div class="answers" id="answers" hidden>
+          <div class="answers-wrap" id="answers" inert><div class="answers">
             <hr class="rule">
             ${qBlock('When do you reach for this?', 'occasion')}
             ${qBlock('This drink tastes like…', 'tastesLike')}
             ${qBlock('Who’s at the table?', 'company')}
-          </div>
+          </div></div>
         </div>`}
       </section>
 
@@ -455,7 +502,8 @@
     toggle.addEventListener('click', () => {
       const open = toggle.getAttribute('aria-expanded') === 'true';
       toggle.setAttribute('aria-expanded', String(!open));
-      answers.hidden = open;
+      answers.classList.toggle('is-open', !open);
+      answers.inert = open;
       toggle.textContent = open ? 'See all answers ↓' : 'Hide answers ↑';
       toggle.classList.toggle('btn-primary', open);
       toggle.classList.toggle('btn-secondary', !open);
@@ -476,7 +524,7 @@
     return `
       <section class="about-intro card">
         <p class="t-meta muted">${esc(a.label)}</p>
-        <h1 class="t-header">${linked(a.headline)}</h1>
+        <h1 class="t-header">${linked(a.headline, '#your-story')}</h1>
         <div class="about-columns">${a.columns.map((c) => `<p class="t-body">${esc(c)}</p>`).join('')}</div>
       </section>
 
@@ -495,9 +543,9 @@
         </div>
       </section>
 
-      <section class="pull-quote">
-        <div class="stacked-logo"><img src="${asset('brand/eclipse.svg')}" alt="" width="138" height="100"><p class="wordmark">Sip &amp; Tell</p><p class="t-meta muted">${esc(a.tagline)}</p></div>
-        <p class="t-header">${linked(a.quote)}</p>
+      <section class="pull-quote" id="your-story">
+        <div class="stacked-logo">${site.logoSvg || `<img src="${asset('brand/eclipse.svg')}" alt="" width="138" height="100">`}<p class="wordmark">Sip &amp; Tell</p><p class="t-meta muted">${esc(a.tagline)}</p></div>
+        <p class="t-header">${linked(a.quote, null, 'add-story')}</p>
         <button class="btn btn-primary" type="button" data-action="add-story">Add your story +</button>
       </section>`;
   }
@@ -582,7 +630,7 @@
           ${st.occasion ? `<div class="q-options">
             ${moments.map((m) => { const on = st.moments.includes(m); return `<button type="button" class="q-option" aria-pressed="${on}" data-moment="${esc(m)}"${!on && full ? ' disabled' : ''}><span class="q-dot" aria-hidden="true"></span><span class="t-body">${esc(m)}</span></button>`; }).join('')}
             <label class="q-own"><span class="visually-hidden">Write your own moment</span>
-              <input type="text" maxlength="80" placeholder="${esc(C.writeOwn)}" value="${esc(st.own)}" data-field="own"${!st.own.trim() && full ? ' disabled' : ''}>
+              <span class="q-input"><input type="text" maxlength="80" placeholder=" " value="${esc(st.own)}" data-field="own"${!st.own.trim() && full ? ' disabled' : ''}><span class="q-ph">${esc(C.writeOwn)}</span></span>
               <span class="t-meta q-count" data-count="own">${st.own.length} / 80</span></label>
             <p class="q-note t-body" data-limit-note${full ? '' : ' hidden'}>${esc(C.pickLimit)}</p>
           </div>` : ''}`;
@@ -601,7 +649,7 @@
         ${noteErr ? `<p class="q-error-msg t-body" role="alert">${esc(C.noteError)}</p>` : ''}
         <label class="q-field${signErr ? ' is-error' : ''}">
           <span class="t-meta muted">Sign as / <span class="accent">Required</span></span>
-          <input type="text" maxlength="40" placeholder="${esc(C.signPlaceholder)}" value="${esc(st.sign)}" data-field="sign" autocomplete="off">
+          <span class="q-input"><input type="text" maxlength="40" placeholder=" " value="${esc(st.sign)}" data-field="sign" autocomplete="off"><span class="q-ph">${esc(C.signPlaceholder)}</span></span>
         </label>
         ${signErr ? `<p class="q-error-msg t-body" role="alert">${esc(C.signError)}</p>` : ''}
         <p class="t-meta muted">${esc(C.limit)}</p>
@@ -773,11 +821,16 @@
         fetch(`${ROOT}/data/drinks.json`, { cache: 'no-cache' }).then((r) => r.json()),
       ]);
       site.units = data.units;
+      // The header logo is inlined so its sun and moon can be animated separately
+      site.logoSvg = await fetch(asset('brand/eclipse.svg')).then((r) => r.text()).then((t) => {
+        let n = 0;
+        return t.replace('<svg ', '<svg class="logo-mark" aria-hidden="true" ').replace(/<path /g, () => `<path class="${n++ ? 'logo-moon' : 'logo-sun'}" `);
+      }).catch(() => '');
       const drinks = data.drinks;
       if (site.storiesEndpoint) applyStories(drinks, await loadApproved(site.storiesEndpoint));
       const body = PAGE === 'drink' ? renderDrink(site, drinks) : PAGE === 'about' ? renderAbout(site, drinks) : renderHome(site, drinks);
       app.innerHTML = `${header(site, drinks)}<main id="main" class="page page-${PAGE}">${body}</main>${footer(site)}`;
-      if (PAGE === 'home') wireMenu(site, drinks);
+      if (PAGE === 'home') { wireHero(site, drinks); wireMenu(site, drinks); }
       if (PAGE === 'drink') wireDrink(site, drinks);
       const story = questionnaire(site, drinks);
       app.addEventListener('click', (e) => {

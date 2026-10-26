@@ -16,6 +16,7 @@
       "greeting": "good morning, come on in.",
       "intro": "Meet today’s special, or browse the menu by the moment you’re in.",
       "specialLabel": "Today’s special",
+      "alsoLabel": "Also brewing today",
       "special": "london-fog",
       "statement": "the day café is where [study groups] come to chat, hard mornings are made [simple], and [old stories] are revived.",
       "ticker": [
@@ -49,6 +50,7 @@
       "greeting": "good evening, come on in.",
       "intro": "Meet tonight’s special, or browse the menu by the moment you’re in.",
       "specialLabel": "Tonight’s special",
+      "alsoLabel": "Also pouring tonight",
       "special": "margarita",
       "statement": "the moon saloon is where [old friends reconnect], past mistakes inspire [laughs], and worries turn into [dance moves].",
       "ticker": [
@@ -216,7 +218,7 @@
       ]
     },
     "tagline": "A community drink archive",
-    "quote": "Sometimes the drink isn’t really the point. It’s [the moments surrounding it] that stay in our memory."
+    "quote": "Sometimes the drink isn’t really the point. It’s [everything around it] that we remember."
   },
   "footer": {
     "blurb": "A community archive of drinks and the moments surrounding them. Find your usual and leave a story behind.",
@@ -367,12 +369,12 @@
       "writeOwn": "Or write your own…",
       "pickLimit": "You’ve picked 2. Unselect one to choose another.",
       "pickOne": "Pick one to continue.",
-      "notePrompt": "What would you tell the next person who orders this?",
+      "notePrompt": "What happened? Anything from a small detail to advice for the next person who orders this.",
       "noteError": "Add a note for the next person.",
       "signPlaceholder": "First name, initials, or anonymous",
       "signError": "Add a first name, initials, or “anonymous” to share your story.",
       "limit": "280 characters max",
-      "privacy": "Your story will be posted publicly on Sip & Tell. Sign as “Anonymous” if you’d rather not share your name. We never ask for your email or contact info.",
+      "privacy": "Your story will be posted publicly on Sip & Tell. Sign as “Anonymous” if you’d rather not share your name. We never ask for any kind of contact info.",
       "failed": "Your story didn’t send. Your answers are still here, so you can try again.",
       "doneTitle": "Thanks for sharing!",
       "doneText": "Your story will appear in the archive once it’s been read. Here’s how it will look:",
