@@ -71,3 +71,17 @@ Figma: "Interaction states / Day Café" and "/ Moon Saloon", to the right of the
 
 ## Loading
 Each page shell (`day/*.html`, `moon/*.html`) carries an inline eclipse loader inside `#app`, so it shows before any script runs. It fades in after 0.3s (fast loads never flash it), the sun turns and the moon drifts across it, and `boot()` replaces it when the page renders. The slow part is the Apps Script stories call (cached 5 minutes per tab, 5s timeout), which now loads alongside the logo instead of after it. If the eclipse artwork changes, re-inline it in all six shells.
+
+## Responsive sizing
+- **Phones (<768):**
+  - The home arch is capped at 250px wide.
+  - The drink-page illustration box is 260px tall. Illustrations fit by height, so the drink stays whole and the name shows near the fold.
+  - Menu names are 24px with 30px marks. Tapped menu popups have a 240px illustration box.
+  - The footer padding and gaps are tighter. The space name is 58px. The About example icon is 120px.
+- **Tablet (768–1023):**
+  - Menu names step down to 34px with 44px marks, so coming-soon rows keep their pill, leader and type on one line.
+  - The footer puts the project line on top, with hours and credits side by side. It becomes three columns from 1024.
+- **Drink hero:**
+  - Below 1100 it stacks, with the illustration box at `clamp(260px, 52vw, 480px)` tall.
+  - From 1100 it's side by side, with the illustration column at `min(560px, 44%)`. The row is at least 680 tall and grows if the copy needs it; before, copy spilled out and the box ran off the page between about 920 and 1300.
+- **Checked** at 360, 375, 414, 768, 820, 920, 1000, 1024, 1100, 1280, 1366, 1440 and 1920 for horizontal overflow and clipped cards.

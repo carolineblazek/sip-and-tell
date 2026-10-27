@@ -242,7 +242,7 @@ a.door:active { background: var(--accent-30); }
 .pop-card { display: flex; flex-direction: column; gap: 15px; padding: 20px; background: var(--card); border: var(--stroke-accent) solid var(--accent); border-radius: var(--radius-card); }
 .tags { display: flex; flex-wrap: wrap; gap: 8px; }
 /* The tags are the range of answers, not a ranking, so they share one fill */
-.tag { padding: 6px 12px; border-radius: var(--radius-pill); font: var(--fs-meta)/1 var(--font-mono); letter-spacing: var(--ls-meta); text-transform: uppercase; color: var(--on-accent); background: var(--accent); }
+.tag { padding: 6px 12px; border-radius: var(--radius-pill); font: var(--fs-meta)/1 var(--font-mono); letter-spacing: var(--ls-meta); text-transform: uppercase; color: var(--on-accent); background: var(--accent-60); } /* softer than the solid buttons beside them */
 /* Illustration boxes: accent-60 card, drink fills the width and sits on the bottom */
 .pop-illo { display: flex; justify-content: center; align-items: flex-end; padding: 30px; background: linear-gradient(var(--accent-60), var(--accent-60)), var(--card); border: var(--stroke-accent) solid var(--accent); border-radius: var(--radius-card); overflow: hidden; }
 .pop-illo img { width: 100%; height: auto; }
@@ -253,6 +253,19 @@ a.door:active { background: var(--accent-30); }
 .footer-card { display: flex; flex-direction: column; gap: 15px; padding: 28px 24px; background: var(--accent); color: var(--on-accent); border-radius: var(--radius-card); }
 .footer-col { display: flex; flex-direction: column; gap: var(--space-group); }
 .footer-project .t-body { max-width: 340px; }
+
+@media (max-width: 767px) {
+  /* Phones: smaller hero arch, menu rows and popups, and a tighter footer, so more of the page shows at once */
+  .stage { width: min(100%, 250px); }
+  .row-main { min-height: 52px; padding-block: 8px; }
+  .row-name { font-size: 24px; }
+  .row-mark { width: 30px; height: 30px; }
+  .pop-illo { height: 240px; padding: 20px; }
+  .pop-illo img { width: auto; max-width: 100%; height: 100%; object-fit: contain; object-position: bottom; }
+  .footer-card { gap: 12px; padding: 20px; }
+  .footer-col { gap: 5px; }
+  .footer-col + .footer-col { padding-top: 4px; }
+}
 
 /* ---------- drink page ---------- */
 
@@ -271,7 +284,9 @@ a.door:active { background: var(--accent-30); }
 .traits { display: flex; gap: var(--space-item); flex-wrap: wrap; }
 .traits > span { display: flex; flex-direction: column; gap: 4px; }
 .mark-card { display: flex; align-items: flex-end; justify-content: center; padding: 30px 20px; background: linear-gradient(var(--accent-60), var(--accent-60)), var(--card); border: var(--stroke-accent) solid var(--accent); border-radius: var(--radius-card); overflow: hidden; }
-.mark-card img { width: 100%; height: auto; min-height: 0; max-height: 100%; object-fit: contain; object-position: bottom; }
+.mark-card img { width: auto; max-width: 100%; height: 100%; min-height: 0; object-fit: contain; object-position: bottom; }
+/* Stacked (phone to small laptop): a set height so the drink stays whole and the name sits close below it */
+.mark-card { height: clamp(260px, 52vw, 480px); }
 
 .recipe-card { display: flex; flex-direction: column; gap: 15px; }
 .recipe-top { display: flex; flex-direction: column; gap: 15px; }
@@ -334,6 +349,7 @@ a.door:active { background: var(--accent-30); }
 .icon-row { display: flex; flex-wrap: wrap; gap: 15px; }
 .icon-row li { display: flex; flex-direction: column; align-items: center; gap: var(--space-group); width: 72px; }
 .icon-tile { display: grid; place-items: center; width: 72px; height: 72px; }
+@media (max-width: 767px) { .icon-example img { width: 120px; height: 120px; } } /* phones: the example icon no longer dwarfs the key */
 .icon-tile img { width: 100%; height: 100%; }
 .icon-core { background: #DCD6E4; border-radius: var(--radius-inner); }
 .icon-core img { width: 34px; height: 34px; }
@@ -360,7 +376,10 @@ a.door:active { background: var(--accent-30); }
   .row-main { min-height: 84px; padding: 16px 28px; gap: 24px; }
   .row-mark { width: 56px; height: 56px; }
 
-  .footer-card { flex-direction: row; justify-content: space-between; gap: 40px; padding: var(--space-block); }
+  /* Tablet: project line on top, hours and credits side by side under it; three columns from 1024 */
+  .footer-card { display: grid; grid-template-columns: auto auto; justify-content: start; gap: 24px 60px; padding: var(--space-block); }
+  .footer-project { grid-column: 1 / -1; }
+  .row-meta { white-space: nowrap; }
 
   .crumbs { display: block; }
   .stories { margin-inline: 0; padding-inline: 0; }
@@ -383,9 +402,6 @@ a.door:active { background: var(--accent-30); }
   .special-name .mark { width: 56px; height: 56px; }
   .special-name span { white-space: nowrap; } /* a two-line name would push the hero past the arch's 360px */
 
-  /* Standard box size: every drink hero is the same height, whatever the illustration's proportions */
-  .drink-hero { display: grid; grid-template-columns: 1fr 560px; grid-template-rows: 680px; gap: 30px; }
-  .mark-card { height: 100%; }
   .title-card { gap: 30px; }
   .drink-mark { width: 70px; height: 70px; }
   .details div { flex-direction: row; gap: 30px; }
@@ -420,15 +436,44 @@ a.door:active { background: var(--accent-30); }
   .menu-row.is-published:focus-within .row-main { background: var(--accent); color: var(--on-accent); }
   .menu-row.is-published:hover .row-num,
   .menu-row.is-published:hover .row-meta { color: var(--on-accent); }
-  .drink-pop { position: absolute; z-index: 5; right: var(--space-item); top: -10px; flex-direction: row; margin: 0; pointer-events: auto; }
-  .row-main[aria-expanded="true"] + .drink-pop { display: none; }
+  /* Popup: always laid out, hidden until hover. The cards spring up one after the other
+     and the drink rises into its box a beat later; leaving fades them out quickly. */
+  .drink-pop { display: flex; position: absolute; z-index: 5; right: var(--space-item); top: -10px; flex-direction: row; margin: 0; visibility: hidden; pointer-events: none; transition: visibility 0s linear .15s; }
+  .pop-card, .pop-illo { opacity: 0; transform: translateY(12px) scale(.96); transform-origin: 50% 100%; transition: opacity .15s ease, transform .15s ease; }
+  .pop-illo img { transform: translateY(24px); transition: transform .15s ease; }
   .menu-row.is-published:hover .drink-pop,
-  .menu-row.is-published:focus-within .drink-pop { display: flex; }
+  .menu-row.is-published:focus-within .drink-pop { visibility: visible; pointer-events: auto; transition-delay: 0s; }
+  .menu-row.is-published:hover :is(.pop-card, .pop-illo),
+  .menu-row.is-published:focus-within :is(.pop-card, .pop-illo) { opacity: 1; transform: none; transition: opacity .2s ease, transform .4s cubic-bezier(.3, 1.4, .5, 1); }
+  .menu-row.is-published:hover .pop-illo,
+  .menu-row.is-published:focus-within .pop-illo { transition-delay: .06s; }
+  .menu-row.is-published:hover .pop-illo img,
+  .menu-row.is-published:focus-within .pop-illo img { transform: none; transition: transform .5s cubic-bezier(.3, 1.4, .5, 1) .14s; }
   .pop-card { width: 400px; align-self: flex-start; } /* fits the longest name, Shirley Temple, on one line; hugs its content beside the taller illustration */
   .pop-illo { width: 330px; }
 }
 
 /* Wide desktop: the three-column hero from the Figma desktop page */
+
+/* Tablet portrait to small laptop: menu names step down a size so a coming-soon row keeps its leader and type */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .row-name { font-size: 34px; }
+  .row-main { gap: 14px; padding-inline: 22px; }
+  .row-mark { width: 44px; height: 44px; }
+  .row-leader { min-width: 8px; }
+}
+
+@media (min-width: 1024px) {
+  .footer-card { display: flex; flex-direction: row; justify-content: space-between; gap: 40px; }
+}
+
+/* Side-by-side drink hero once the 560px illustration and the text both fit (below this the box ran off the page) */
+@media (min-width: 1100px) {
+  /* Standard box size: every drink hero is at least 680 tall, whatever the illustration's proportions.
+     The illustration column gives way on smaller laptops, and the row grows rather than letting long copy spill out. */
+  .drink-hero { display: grid; grid-template-columns: minmax(0, 1fr) min(560px, 44%); grid-template-rows: minmax(680px, auto); gap: 30px; }
+  .mark-card { height: 100%; }
+}
 
 @media (min-width: 1200px) {
   .hero { grid-template-columns: 380px 1fr 400px; }
@@ -463,7 +508,7 @@ a.door:active { background: var(--accent-30); }
 .q-question h2:focus { outline: none; }
 .q-body { display: flex; flex-direction: column; gap: 15px; }
 .q-dialog .chip.is-error { border-color: var(--error); }
-.q-drinks { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+.q-drinks { display: grid; grid-template-columns: repeat(min(var(--n, 2), 3), 1fr); gap: 10px; }
 .q-drink-card {
   display: flex; flex-direction: column; align-items: center; gap: var(--space-group); padding: 15px 10px;
   border: 1px solid var(--ink-10); border-radius: var(--radius-inner); text-align: center;
@@ -520,10 +565,11 @@ a.door:active { background: var(--accent-30); }
 .q-leave-card .button-row { justify-content: flex-end; }
 
 @media (min-width: 768px) {
-  .q-dialog { width: min(760px, calc(100% - 40px)); height: auto; max-height: calc(100% - 40px); margin: auto; border: var(--stroke-accent) solid var(--accent); border-radius: var(--radius-card); }
+  /* Hugs each step and stays pinned near the top, so answers that open up extend it downward instead of shifting it */
+  .q-dialog { width: min(760px, calc(100% - 40px)); height: fit-content; max-height: calc(100% - 7vh - 20px); margin: 7vh auto auto; border: var(--stroke-accent) solid var(--accent); border-radius: var(--radius-card); }
   .q-card { min-height: 0; padding: var(--space-block); gap: var(--space-item); }
   .q-wide { display: inline; }
-  .q-drinks { grid-template-columns: repeat(4, 1fr); }
+  .q-drinks { grid-template-columns: repeat(min(var(--n, 4), 4), 1fr); } /* one row while the space has four or fewer drinks */
   .q-nav { margin-top: var(--space-group); }
 }
 

@@ -1,6 +1,6 @@
 {
   "$description": "Sip & Tell page copy. Edit text here; app.js renders it. Underlined (linked) words are marked with [square brackets].",
-  "storiesEndpoint": "https://script.google.com/macros/s/AKfycbzk1bTtHneMTI13HtGusGdTjkgX8BvIVS0X3R88P4VN4A2U3sOkSxgeq-sbbSN2q395ZA/exec",
+  "storiesEndpoint": "https://script.google.com/macros/s/AKfycbxPEuTzBjytGyc-0I0G2DV47vodYseEpZLwlajuWmgMGuE-ZLkfrZ-GBqUwo9fOdMKW/exec",
   "spaces": {
     "day": {
       "name": "The Day Café",

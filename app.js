@@ -36,30 +36,16 @@
   }
   const top = (stories, key) => (tally(stories, key)[0] || [null])[0];
 
-  function occasionList(site, occasions) {
-    let prev = null;
-    const parts = occasions.map((o) => {
-      const [prep, word] = site.phrases.occasion[o] || ['while', lower(o)];
-      const out = (prep === prev ? '' : `${prep} `) + `<span class="inline-link">${esc(word)}</span>`;
-      prev = prep;
-      return out;
-    });
-    if (parts.length < 2) return parts.join('');
-    return parts.slice(0, -1).join(', ') + `${parts.length > 2 ? ',' : ''} and ` + parts[parts.length - 1];
-  }
-
+  // The top answer to each of the three questions, read as one sentence like a story card
   function summarySentence(site, drink) {
     const st = drink.stories;
     const name = esc(drink.sentenceName || drink.name);
     const occ = tally(st, 'occasion');
-    const clearLeader = occ.length && occ[0][1] >= 2 && (!occ[1] || occ[1][1] < occ[0][1]);
-    if (clearLeader) {
-      const [prep, word] = site.phrases.occasion[occ[0][0]] || ['while', lower(occ[0][0])];
-      const company = top(st, 'company');
-      const companyText = site.phrases.companyMost[company] || site.phrases.companyMost.default.replace('{company}', site.phrases.company[company] || lower(company));
-      return `Most people reach for a ${name} ${prep} <span class="inline-link">${esc(word)}</span>, <span class="inline-link">${esc(companyText)}</span>, and say it tastes like <span class="inline-link">${esc(lower(top(st, 'tastesLike')))}</span>.`;
-    }
-    return `So far, people have reached for a ${name} ${occasionList(site, occ.slice(0, 3).map((o) => o[0]))}.`;
+    const clearLeader = occ[0][1] >= 2 && (!occ[1] || occ[1][1] < occ[0][1]);
+    const [prep, word] = site.phrases.occasion[occ[0][0]] || ['while', lower(occ[0][0])];
+    const company = top(st, 'company');
+    const companyText = site.phrases.companyMost[company] || site.phrases.companyMost.default.replace('{company}', site.phrases.company[company] || lower(company));
+    return `${clearLeader ? 'Most people reach' : 'So far, people reach'} for a ${name} ${prep} <span class="inline-link">${esc(word)}</span>, <span class="inline-link">${esc(companyText)}</span>, and say it tastes like <span class="inline-link">${esc(lower(top(st, 'tastesLike')))}</span>.`;
   }
 
   function storySentence(site, drink, s) {
@@ -588,7 +574,8 @@
   function questionnaire(site, drinks) {
     const Q = site.questionnaire;
     const C = Q.copy;
-    const own = drinks.filter((d) => d.space === SPACE);
+    // Only drinks with a page can take stories; coming-soon drinks aren't offered
+    const own = drinks.filter((d) => d.space === SPACE && d.published);
     const tastes = site.spaces[SPACE].ticker;
     const dlg = document.createElement('dialog');
     dlg.className = 'q-dialog';
@@ -622,7 +609,7 @@
 
     function body() {
       if (step === 0) {
-        return `<div class="q-drinks">${own.map((d) => `<button type="button" class="q-drink-card${err()}" aria-pressed="${st.drink === d.id}" data-pick="${d.id}">${markImg(d, 'q-drink-mark')}<span class="t-meta">${esc(d.name)}</span></button>`).join('')}</div>`;
+        return `<div class="q-drinks" style="--n: ${own.length}">${own.map((d) => `<button type="button" class="q-drink-card${err()}" aria-pressed="${st.drink === d.id}" data-pick="${d.id}">${markImg(d, 'q-drink-mark')}<span class="t-meta">${esc(d.name)}</span></button>`).join('')}</div>`;
       }
       if (step === 1) {
         const full = picks() >= 2;
@@ -653,7 +640,6 @@
           <span class="q-input"><input type="text" maxlength="40" placeholder=" " value="${esc(st.sign)}" data-field="sign" autocomplete="off"><span class="q-ph">${esc(C.signPlaceholder)}</span></span>
         </label>
         ${signErr ? `<p class="q-error-msg t-body" role="alert">${esc(C.signError)}</p>` : ''}
-        <p class="t-meta muted">${esc(C.limit)}</p>
         <p class="t-body muted">${esc(C.privacy)}</p>
         <label class="q-honeypot" aria-hidden="true">Website <input type="text" tabindex="-1" autocomplete="off" data-field="website"></label>`;
     }
