@@ -20,7 +20,7 @@
   const lower = (s) => s.charAt(0).toLowerCase() + s.slice(1);
 
   // "[study groups]" in copy becomes an underlined accent link
-  const linked = (text, href, action) => esc(text).replace(/\[(.+?)\]/g, (_, w) => action ? `<button type="button" class="inline-link" data-action="${action}">${w}</button>`
+  const linked = (text, href, action) => esc(text).replace(/\[(.+?)\]/g, (_, w) => action ? `<a class="inline-link" href="#your-story" role="button" data-action="${action}">${w}</a>`
     : href ? `<a class="inline-link" href="${href}">${w}</a>` : `<span class="inline-link">${w}</span>`);
 
   const PLURALS = { story: 'stories', match: 'matches' };
@@ -378,7 +378,7 @@
           </dl>
           ${empty
             ? `<button class="btn btn-primary btn-wide" type="button" data-action="add-story" data-drink="${d.id}">Be the first to share a story +</button>`
-            : '<a class="btn btn-primary btn-wide" href="#stories">See community stories about this drink ↓</a>'}
+            : '<a class="btn btn-primary btn-wide" href="#stories">See community stories<span class="wide-only"> about this drink</span> ↓</a>'}
         </div>
         <div class="mark-card">
           <img src="${asset(`illustrations/${d.id}-1200.webp`)}" srcset="${asset(`illustrations/${d.id}-600.webp`)} 600w, ${asset(`illustrations/${d.id}-1200.webp`)} 1200w" sizes="(min-width: 900px) 560px, 90vw" alt="Illustration of a ${esc(d.name)}">
@@ -610,7 +610,7 @@
     }
 
     const err = () => (showErr && !valid() ? ' is-error' : '');
-    const chips = (group, list, selected) => `<div class="chips">${list.map((v) => `<button type="button" class="chip${err()}" aria-pressed="${selected === v}" data-${group}="${esc(v)}">${esc(v)}</button>`).join('')}</div>`;
+    const chips = (group, list, selected) => `<div class="chips chips-${group}">${list.map((v) => `<button type="button" class="chip${err()}" aria-pressed="${selected === v}" data-${group}="${esc(v)}">${esc(v)}</button>`).join('')}</div>`;
 
     function body() {
       if (step === 0) {
@@ -620,10 +620,10 @@
         const full = picks() >= 2;
         const moments = st.occasion ? Q.moments[st.occasion][SPACE] : [];
         return `${chips('occasion', site.occasions, st.occasion)}
-          ${st.occasion ? `<div class="q-options${full ? ' is-full' : ''}">
-            ${moments.map((m) => { const on = st.moments.includes(m); return `<button type="button" class="q-option" aria-pressed="${on}" data-moment="${esc(m)}"${!on && full ? ' disabled' : ''}><span class="q-dot" aria-hidden="true"></span><span class="t-body">${esc(m)}</span></button>`; }).join('')}
+          ${st.occasion ? `<div class="q-options">
+            ${moments.map((m) => { const on = st.moments.includes(m); return `<button type="button" class="q-option" aria-pressed="${on}" data-moment="${esc(m)}"><span class="q-dot" aria-hidden="true"></span><span class="t-body">${esc(m)}</span></button>`; }).join('')}
             <label class="q-own"><span class="visually-hidden">Write your own moment</span>
-              <span class="q-input"><input type="text" maxlength="80" placeholder=" " value="${esc(st.own)}" data-field="own"${!st.own.trim() && full ? ' disabled' : ''}><span class="q-ph">${esc(C.writeOwn)}</span></span>
+              <span class="q-input"><input type="text" maxlength="80" placeholder=" " value="${esc(st.own)}" data-field="own"><span class="q-ph">${esc(C.writeOwn)}</span></span>
               <span class="t-meta q-count" data-count="own">${st.own.length} / 80</span></label>
             <p class="q-note t-body" data-limit-note${full ? '' : ' hidden'}>${esc(C.pickLimit)}</p>
           </div>` : ''}`;
@@ -768,7 +768,9 @@
       else if (t.dataset.occasion) { if (st.occasion !== t.dataset.occasion) { st.occasion = t.dataset.occasion; st.moments = []; } }
       else if (t.dataset.moment) {
         const m = t.dataset.moment;
-        st.moments = st.moments.includes(m) ? st.moments.filter((x) => x !== m) : (picks() < 2 ? [...st.moments, m] : st.moments);
+        // Like the single-pick questions, a new tap always counts: with two already picked, the oldest pick makes room
+        if (st.moments.includes(m)) st.moments = st.moments.filter((x) => x !== m);
+        else st.moments = picks() < 2 ? [...st.moments, m] : [...st.moments.slice(1), m];
       }
       else if (t.dataset.tastes) st.tastes = t.dataset.tastes;
       else if (t.dataset.company) st.company = t.dataset.company;
@@ -791,11 +793,11 @@
         count.classList.toggle('is-limit', st[f].length >= max);
       }
       if (f === 'own') {
-        const full = picks() >= 2;
-        dlg.querySelectorAll('.q-option').forEach((b) => { b.disabled = full && b.getAttribute('aria-pressed') !== 'true'; });
+        // Writing their own with two moments already picked swaps out the oldest one (updated in place so typing keeps focus)
+        if (st.own.trim() && st.moments.length >= 2) st.moments = st.moments.slice(1);
+        dlg.querySelectorAll('.q-option').forEach((b) => b.setAttribute('aria-pressed', String(st.moments.includes(b.dataset.moment))));
         const note = dlg.querySelector('[data-limit-note]');
-        if (note) note.hidden = !full;
-        dlg.querySelector('.q-options')?.classList.toggle('is-full', full);
+        if (note) note.hidden = picks() < 2;
       }
       const next = dlg.querySelector('[data-q="next"]');
       if (next) next.setAttribute('aria-disabled', String(!valid() || sending));
@@ -838,7 +840,7 @@
       const story = questionnaire(site, drinks);
       app.addEventListener('click', (e) => {
         const b = e.target.closest('[data-action="add-story"]');
-        if (b) story.open(b.dataset.drink);
+        if (b) { e.preventDefault(); story.open(b.dataset.drink); }
       });
       if (location.hash) document.getElementById(location.hash.slice(1))?.scrollIntoView();
     } catch (err) {

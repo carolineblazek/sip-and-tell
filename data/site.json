@@ -367,7 +367,7 @@
     ],
     "copy": {
       "writeOwn": "Or write your own…",
-      "pickLimit": "You’ve picked 2. Unselect one to choose another.",
+      "pickLimit": "You’ve picked 2. Tap another to swap it in.",
       "pickOne": "Pick one to continue.",
       "notePrompt": "What happened? Anything from a small detail to advice for the next person who orders this.",
       "noteError": "Add a note for the next person.",
