@@ -342,8 +342,7 @@
     const versions = Object.entries(d.recipe.versions);
     const empty = !st.length;
     const es = site.emptyStories;
-    const hasCard = ['london-fog', 'margarita'].includes(d.id); // drinks with an exported recipe card
-    const cardSize = matchMedia('(max-width: 767px)').matches ? 'mobile' : 'web';
+    const hasCard = !!d.recipe.cards; // one exported card per version and serving size, in oz
 
     const qBlock = (label, key) => {
       const rows = tally(st, key);
@@ -389,7 +388,7 @@
       <section class="recipe" id="recipe" aria-labelledby="recipe-title">
         <div class="section-head">
           <h2 id="recipe-title" class="t-header">Recipe</h2>
-          ${hasCard ? `<a class="btn btn-primary btn-small" id="download-recipe" href="${asset(`recipe-cards/${d.id}-${cardSize}.jpg`)}" download="sip-and-tell-${d.id}.jpg">Download recipe ↓</a>` : ''}
+          ${hasCard ? `<a class="btn btn-primary btn-small" id="download-recipe" href="${asset(`recipe-cards/${d.id}-${versions[0][0]}-1.png`)}" download>Download recipe ↓</a>` : ''}
         </div>
         <div class="recipe-card card" id="recipe-card">
           <div class="recipe-top">
@@ -475,6 +474,12 @@
       document.querySelectorAll('[data-units]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.units === state.units)));
       document.querySelector('[data-step="-1"]').disabled = state.serves <= 1;
       document.querySelector('[data-step="1"]').disabled = state.serves >= max;
+      // The download matches the version and serving size on screen (cards are written in oz)
+      const dl = document.getElementById('download-recipe');
+      if (dl) {
+        dl.href = asset(`recipe-cards/${d.id}-${state.version}-${state.serves}.png`);
+        dl.download = `sip-and-tell-${d.id}-${state.version}-serves-${state.serves}.png`;
+      }
     }
     document.querySelectorAll('[data-version]').forEach((b) => b.addEventListener('click', () => { state.version = b.dataset.version; draw(); }));
     document.querySelectorAll('[data-units]').forEach((b) => b.addEventListener('click', () => { state.units = b.dataset.units; draw(); }));
@@ -615,7 +620,7 @@
         const full = picks() >= 2;
         const moments = st.occasion ? Q.moments[st.occasion][SPACE] : [];
         return `${chips('occasion', site.occasions, st.occasion)}
-          ${st.occasion ? `<div class="q-options">
+          ${st.occasion ? `<div class="q-options${full ? ' is-full' : ''}">
             ${moments.map((m) => { const on = st.moments.includes(m); return `<button type="button" class="q-option" aria-pressed="${on}" data-moment="${esc(m)}"${!on && full ? ' disabled' : ''}><span class="q-dot" aria-hidden="true"></span><span class="t-body">${esc(m)}</span></button>`; }).join('')}
             <label class="q-own"><span class="visually-hidden">Write your own moment</span>
               <span class="q-input"><input type="text" maxlength="80" placeholder=" " value="${esc(st.own)}" data-field="own"${!st.own.trim() && full ? ' disabled' : ''}><span class="q-ph">${esc(C.writeOwn)}</span></span>
@@ -790,6 +795,7 @@
         dlg.querySelectorAll('.q-option').forEach((b) => { b.disabled = full && b.getAttribute('aria-pressed') !== 'true'; });
         const note = dlg.querySelector('[data-limit-note]');
         if (note) note.hidden = !full;
+        dlg.querySelector('.q-options')?.classList.toggle('is-full', full);
       }
       const next = dlg.querySelector('[data-q="next"]');
       if (next) next.setAttribute('aria-disabled', String(!valid() || sending));
@@ -811,7 +817,12 @@
       // The logo and the approved stories load side by side; the stories are the slow part
       const [logoSvg, approved] = await Promise.all([
         // The header logo is inlined so its sun and moon can be animated separately
-        fetch(asset('brand/eclipse.svg')).then((r) => r.text()).then((t) => {
+        fetch(asset('brand/eclipse.svg')).then((r) => {
+          // Only inline a real SVG; an error page from the host must never be dropped into the header
+          if (!r.ok || !(r.headers.get('content-type') || '').includes('svg')) throw new Error(`Logo ${r.status}`);
+          return r.text();
+        }).then((t) => {
+          if (!t.trim().startsWith('<svg')) throw new Error('Logo is not an SVG');
           let n = 0;
           return t.replace('<svg ', '<svg class="logo-mark" aria-hidden="true" ').replace(/<path /g, () => `<path class="${n++ ? 'logo-moon' : 'logo-sun'}" `);
         }).catch(() => ''),

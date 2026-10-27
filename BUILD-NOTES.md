@@ -40,7 +40,7 @@ Figma: "Recipe JPEG / Web / …" (under the desktop recipe components) and "Reci
 - **Mobile**: 540 × 810 layout, saved at 1080 × 1620 (2:3 portrait). Logo row, then the illustration card (it takes whatever height is left), then mark + name, setting, ingredients, method and footer.
 - The JPEG always reflects the reader's current version, units and serving count.
 - Build approach: render a hidden copy of this layout at 2× with `html2canvas` / `modern-screenshot`, then download it as `sip-and-tell-{drink}-{version}-{units}-serves-{n}.jpg`. Use the web layout above 768px and the mobile layout below it.
-- **Current build:** downloads serve the exported cards in `assets/recipe-cards/{drink}-{web|mobile}.jpg` (first version / oz / serves 1), picking the mobile card below 768px. Drinks without an exported card (Cosmopolitan for now) show no download button. The live render above is a possible later upgrade.
+- **Current build:** one card per drink, version and serving size: 36 PNGs exported at 3× from Figma ("Recipe cards / Web", Pages page), in `assets/recipe-cards/{drink}-{version key}-{serves}.png`, e.g. `matcha-iced-2.png`. The same card is used on every screen size. The download button follows the version toggle and serves stepper. Cards are written in oz, so they stay in oz when the page is switched to ml. A drink gets the button when its recipe has `"cards": true` in `data/drinks.json`.
 
 ## Story submissions → Google Sheet (for now)
 - The questionnaire POSTs to a Google Apps Script web app, which appends a row to a Google Sheet. Columns are in `data/stories-sheet-template.csv`.

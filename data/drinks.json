@@ -17,10 +17,10 @@
       },
       "intro": "A fragrant tea latte that blends Earl Grey, steamed milk, and a touch of sweetness.",
       "about": "The London Fog gets its distinctive flavor from bergamot-scented Earl Grey tea. Steamed milk and vanilla create a soft, creamy drink that balances the tea's citrusy aroma.",
-      "funFact": "Despite the name, the London Fog was most likely born in a Vancouver café in the 1990s. The story goes it was named for the way steamed milk clouds the tea, like fog rolling in.",
+      "funFact": "Despite the name, the London Fog was most likely born in a Vancouver café in the 1990s. Nobody’s sure who named it, but most people guess it’s the way steamed milk clouds the tea.",
       "served": [
         "Steamed",
-        "Hot"
+        "Hot or iced"
       ],
       "recipe": {
         "versions": {
@@ -94,7 +94,8 @@
             ]
           }
         },
-        "servesMax": 3
+        "servesMax": 3,
+        "cards": true
       },
       "stories": [
         {
@@ -188,7 +189,8 @@
               "Gently stir and serve immediately."
             ]
           }
-        }
+        },
+        "cards": true
       }
     },
     {
@@ -204,7 +206,7 @@
       "sentenceName": "matcha",
       "intro": "A vibrant green tea drink with a rich, earthy flavor and a long history rooted in Japanese tea culture.",
       "about": "Matcha is made by whisking finely ground green tea powder with water, creating a smooth, slightly bitter drink with a naturally creamy texture. It can also be combined with milk and sweetener to make a matcha latte.",
-      "funFact": "Because matcha is made from the entire tea leaf rather than steeped and discarded, you consume the powdered leaf itself.",
+      "funFact": "Instead of steeping the leaves and throwing them away, matcha is the leaf itself, ground into powder. That’s also why it has more caffeine than regular green tea.",
       "served": [
         "Whisked",
         "Hot or iced"
@@ -269,7 +271,8 @@
               "Fill a glass with ice and cold milk, then pour the matcha over."
             ]
           }
-        }
+        },
+        "cards": true
       },
       "stories": []
     },
@@ -308,7 +311,7 @@
         "core": "citrus"
       },
       "intro": "A bright combination of tequila, citrus, and salt that balances sweet, sour, and savory flavors.",
-      "about": "A classic Margarita combines tequila with lime juice and orange liqueur. It is commonly served over ice or shaken and strained into a glass with a salted rim.",
+      "about": "A classic Margarita combines tequila with lime juice and orange liqueur. It is shaken with ice and served either over fresh ice or strained into a chilled glass, often with a salted rim.",
       "funFact": "The frozen margarita machine was invented in 1971 by a Dallas restaurant owner who rigged up a soft-serve ice cream machine. The original now lives in the Smithsonian.",
       "served": [
         "Shaken",
@@ -350,6 +353,7 @@
             "method": [
               "Rim a glass with lime and dip in salt.",
               "Shake tequila, lime juice, and orange liqueur with ice.",
+              "Strain over fresh ice.",
               "Garnish with a lime wedge."
             ]
           },
@@ -395,7 +399,8 @@
               "Garnish with a lime wedge."
             ]
           }
-        }
+        },
+        "cards": true
       },
       "stories": [
         {
@@ -442,7 +447,7 @@
       "sentenceName": "cosmopolitan",
       "intro": "A sharply pink cocktail with a citrusy personality and unmistakable late-night energy.",
       "about": "The Cosmopolitan combines vodka, cranberry juice, orange liqueur, and lime juice. It is tart, lightly sweet, and usually served chilled in a martini glass.",
-      "funFact": "The Cosmopolitan became particularly famous in the 1990s after appearing frequently on Sex and the City.",
+      "funFact": "The Cosmopolitan became particularly famous in the late 1990s and early 2000s after appearing frequently on Sex and the City.",
       "served": [
         "Shaken",
         "Cold"
@@ -460,7 +465,7 @@
               },
               {
                 "item": "Cranberry juice",
-                "qty": 0.75,
+                "qty": 1,
                 "unit": "oz"
               },
               {
@@ -524,7 +529,8 @@
               "Garnish with an orange twist."
             ]
           }
-        }
+        },
+        "cards": true
       }
     },
     {
@@ -539,12 +545,12 @@
       },
       "stories": [],
       "sentenceName": "Shirley Temple",
-      "intro": "A sweet, sparkling mocktail that has been a fixture of restaurant menus and childhood celebrations for generations.",
+      "intro": "A sweet, sparkling mocktail that has been a fixture of restaurant menus for generations.",
       "about": "The classic Shirley Temple combines ginger ale or lemon-lime soda with grenadine and is usually finished with a maraschino cherry. It is sweet, fizzy, and completely alcohol-free.",
       "funFact": "The drink was named after child movie star Shirley Temple, although she reportedly disliked the drink herself.",
       "served": [
         "Built over ice",
-        "Zero-proof"
+        "Sparkling"
       ],
       "recipe": {
         "servesMax": 3,
@@ -604,7 +610,8 @@
               "Stir gently and garnish with a maraschino cherry."
             ]
           }
-        }
+        },
+        "cards": true
       }
     },
     {

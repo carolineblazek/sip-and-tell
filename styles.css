@@ -33,6 +33,7 @@ html, body { overflow-x: clip; } /* lets the ticker bleed edge to edge without a
    showing so fast loads don't flash, then the moon drifts across the turning sun. */
 .loader { position: fixed; inset: 0; display: grid; place-items: center; background: var(--page); opacity: 0; animation: loader-in .4s ease .3s forwards; }
 .loader-mark { overflow: visible; }
+.loader-mark g { clip-path: none; } /* the logo's built-in clip box cut the moon off at the end of its drift */
 .loader-sun { transform-box: fill-box; transform-origin: center; animation: sun-spin 6s linear infinite; }
 .loader-moon { animation: loader-eclipse 1.6s ease-in-out infinite alternate; }
 @keyframes loader-in { to { opacity: 1; } }
@@ -204,9 +205,11 @@ a.door:active { background: var(--accent-30); }
 .filters { display: flex; flex-direction: column; gap: var(--space-group); margin-bottom: var(--space-item); }
 .chips { display: flex; flex-wrap: wrap; gap: var(--space-group); }
 .chip {
-  display: inline-flex; align-items: center; min-height: 44px; padding: 6px 15px; border: 1px solid var(--ink); border-radius: var(--radius-pill);
+  position: relative; display: inline-flex; align-items: center; min-height: 36px; padding: 6px 15px; border: 1px solid var(--ink); border-radius: var(--radius-pill);
   font: var(--fs-meta)/1 var(--font-mono); letter-spacing: var(--ls-meta); text-transform: uppercase;
 }
+/* The pill looks slimmer, but its tap area still reaches 44px tall (it spills into the 10px row gap) */
+.chip::after { content: ""; position: absolute; inset: -4px 0; }
 .chip-x { display: none; margin-left: 6px; }
 .chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
 .chip[aria-pressed="true"] .chip-x { display: inline; }
@@ -347,6 +350,7 @@ a.door:active { background: var(--accent-30); }
 .icon-lists { display: flex; flex-direction: column; gap: var(--space-item); width: 100%; }
 .icon-group { display: flex; flex-direction: column; gap: 15px; }
 .icon-row { display: flex; flex-wrap: wrap; gap: 15px; }
+@media (max-width: 767px) { .icon-row { justify-content: center; } } /* phones: 3 over 2, centered */
 .icon-row li { display: flex; flex-direction: column; align-items: center; gap: var(--space-group); width: 72px; }
 .icon-tile { display: grid; place-items: center; width: 72px; height: 72px; }
 @media (max-width: 767px) { .icon-example img { width: 120px; height: 120px; } } /* phones: the example icon no longer dwarfs the key */
@@ -550,6 +554,12 @@ a.door:active { background: var(--accent-30); }
 .q-field.is-error { border-color: var(--error); }
 .q-field .q-count { align-self: flex-end; }
 .q-note, .q-error-msg { display: flex; gap: 8px; align-items: baseline; }
+/* Both moment slots used: the picks and the note turn the error color so the limit is obvious */
+.q-options.is-full .q-option[aria-pressed="true"] { background: var(--error-10); border-color: var(--error); }
+.q-options.is-full .q-option[aria-pressed="true"] .q-dot { background: var(--error); border-color: var(--error); }
+.q-options.is-full .q-own:has(input:not(:placeholder-shown)) { border-color: var(--error); }
+.q-options.is-full .q-note { color: var(--error); }
+.q-options.is-full .q-note::before { background: var(--error); }
 .q-note::before, .q-error-msg::before { content: ""; flex: none; width: 6px; height: 6px; border-radius: 50%; background: var(--muted); transform: translateY(-2px); }
 .q-error-msg { color: var(--error); }
 .q-error-msg::before { background: var(--error); }
