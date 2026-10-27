@@ -244,7 +244,8 @@
       + `<span class="row-leader" aria-hidden="true"></span><span class="row-meta t-meta">${esc(meta)}</span>`;
 
     if (!d.published) {
-      return `<li class="menu-row is-unpublished" aria-disabled="true"><div class="row-main">${inner}<span class="visually-hidden"> (coming soon)</span></div></li>`;
+      const soon = inner.replace(/<span class="row-name">.*?<\/span>/, (name) => `<span class="row-title">${name}<span class="pill-soon t-meta">Coming soon</span></span>`);
+      return `<li class="menu-row is-unpublished" aria-disabled="true"><div class="row-main">${soon}</div></li>`;
     }
     if (guest) {
       return `<li class="menu-row is-guest"><a class="row-main" href="${drinkUrl(d)}">${inner}</a></li>`;
@@ -258,7 +259,7 @@
           <div class="pop-card">
             <h3 class="t-header">${esc(d.name)}</h3>
             <p class="t-body">${esc(d.intro)}</p>
-            <ul class="tags">${tags.map((t, k) => `<li class="tag tag-${k}">${esc(t)}</li>`).join('')}</ul>
+            <ul class="tags">${tags.map((t) => `<li class="tag">${esc(t)}</li>`).join('')}</ul>
             <div class="button-row">
               <a class="btn btn-secondary btn-small" href="${drinkUrl(d, '#stories')}">${st.length ? plural(st.length, 'story') : 'No stories yet'}</a>
               <a class="btn btn-primary btn-small" href="${drinkUrl(d, '#recipe')}">View recipe →</a>
@@ -821,13 +822,18 @@
         fetch(`${ROOT}/data/drinks.json`, { cache: 'no-cache' }).then((r) => r.json()),
       ]);
       site.units = data.units;
-      // The header logo is inlined so its sun and moon can be animated separately
-      site.logoSvg = await fetch(asset('brand/eclipse.svg')).then((r) => r.text()).then((t) => {
-        let n = 0;
-        return t.replace('<svg ', '<svg class="logo-mark" aria-hidden="true" ').replace(/<path /g, () => `<path class="${n++ ? 'logo-moon' : 'logo-sun'}" `);
-      }).catch(() => '');
+      // The logo and the approved stories load side by side; the stories are the slow part
+      const [logoSvg, approved] = await Promise.all([
+        // The header logo is inlined so its sun and moon can be animated separately
+        fetch(asset('brand/eclipse.svg')).then((r) => r.text()).then((t) => {
+          let n = 0;
+          return t.replace('<svg ', '<svg class="logo-mark" aria-hidden="true" ').replace(/<path /g, () => `<path class="${n++ ? 'logo-moon' : 'logo-sun'}" `);
+        }).catch(() => ''),
+        site.storiesEndpoint ? loadApproved(site.storiesEndpoint) : null,
+      ]);
+      site.logoSvg = logoSvg;
       const drinks = data.drinks;
-      if (site.storiesEndpoint) applyStories(drinks, await loadApproved(site.storiesEndpoint));
+      applyStories(drinks, approved);
       const body = PAGE === 'drink' ? renderDrink(site, drinks) : PAGE === 'about' ? renderAbout(site, drinks) : renderHome(site, drinks);
       app.innerHTML = `${header(site, drinks)}<main id="main" class="page page-${PAGE}">${body}</main>${footer(site)}`;
       if (PAGE === 'home') { wireHero(site, drinks); wireMenu(site, drinks); }

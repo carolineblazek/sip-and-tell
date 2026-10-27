@@ -1,0 +1,8 @@
+<svg width="230" height="230" viewBox="0 0 230 230" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="115" cy="115" r="115" fill="url(#g-mimosa)"/>
+<circle cx="115" cy="115" r="114.25" stroke="#C98A07" stroke-opacity="0.75" stroke-width="1.5"/>
+<path d="M115 65L125.607 104.393L165 115L125.607 125.607L115 165L104.393 125.607L65 115L104.393 104.393L115 65Z" fill="#FFFDF6"/>
+<defs>
+<radialGradient id="g-mimosa" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(115 115) scale(115)"><stop stop-color="#FFE6A8"/><stop offset="0.6" stop-color="#FFB619"/><stop offset="1" stop-color="#EBA00C"/></radialGradient>
+</defs>
+</svg>

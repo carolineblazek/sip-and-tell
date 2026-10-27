@@ -11,7 +11,7 @@
  */
 
 const DRINKS = {
-  'london-fog': 'day', 'latte': 'day', 'matcha': 'day', 'boba-tea': 'day',
+  'london-fog': 'day', 'mimosa': 'day', 'matcha': 'day', 'boba-tea': 'day',
   'margarita': 'moon', 'cosmopolitan': 'moon', 'spritz': 'moon', 'shirley-temple': 'moon',
 };
 const LIMITS = { occasion: 40, moment: 80, tastes_like: 60, company: 40, review: 40, note: 280, signed_as: 40 };

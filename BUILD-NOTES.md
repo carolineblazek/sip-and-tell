@@ -67,4 +67,7 @@ Figma: "Interaction states / Day Café" and "/ Moon Saloon", to the right of the
 - **Pressed** (`:active`): solid buttons invert to an `--ink` fill with `--page` text. Everything else takes `--accent-30`. Mobile uses Pressed in place of Hover.
 - **Selected**: an answer chip or option takes an accent fill or outline (see Figma). For links, `aria-current="page"` turns the link accent.
 - **Disabled**: `opacity: .4`. That covers the stepper's − at 1 serving and + at 3, answer options after the pick limit, and Next until a required step is answered.
-- **Unpublished menu rows**: `opacity: .4`, no hover, no pointer, `aria-disabled="true"`.
+- **Unpublished menu rows**: everything but the pill at `opacity: .4`, no hover, no pointer, `aria-disabled="true"`. A dashed accent "Coming soon" pill sits after the name (under it on phones, where long names wrap).
+
+## Loading
+Each page shell (`day/*.html`, `moon/*.html`) carries an inline eclipse loader inside `#app`, so it shows before any script runs. It fades in after 0.3s (fast loads never flash it), the sun turns and the moon drifts across it, and `boot()` replaces it when the page renders. The slow part is the Apps Script stories call (cached 5 minutes per tab, 5s timeout), which now loads alongside the logo instead of after it. If the eclipse artwork changes, re-inline it in all six shells.

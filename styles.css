@@ -29,6 +29,14 @@ html, body { overflow-x: clip; } /* lets the ticker bleed edge to edge without a
 .skip-link { position: absolute; left: 10px; top: -60px; z-index: 50; padding: 10px 20px; background: var(--ink); color: var(--page); border-radius: var(--radius-pill); font: var(--fs-meta) var(--font-mono); text-transform: uppercase; letter-spacing: var(--ls-meta); }
 .skip-link:focus { top: 10px; }
 .noscript { padding: 30px; }
+/* Loader: sits in the page shell until the menu and stories arrive. It waits a beat before
+   showing so fast loads don't flash, then the moon drifts across the turning sun. */
+.loader { position: fixed; inset: 0; display: grid; place-items: center; background: var(--page); opacity: 0; animation: loader-in .4s ease .3s forwards; }
+.loader-mark { overflow: visible; }
+.loader-sun { transform-box: fill-box; transform-origin: center; animation: sun-spin 6s linear infinite; }
+.loader-moon { animation: loader-eclipse 1.6s ease-in-out infinite alternate; }
+@keyframes loader-in { to { opacity: 1; } }
+@keyframes loader-eclipse { from { transform: translateX(6px); } to { transform: translateX(-14px); } }
 
 /* Focus: 2px accent ring with a 2px gap, on everything you can tap */
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
@@ -179,11 +187,12 @@ a.door:active { background: var(--accent-30); }
 @media (hover: hover) { .ticker-pick[aria-pressed="false"]:hover { background: var(--ink-10); } }
 .ticker-pick:active { background: rgb(21 20 27 / .3); }
 .ticker-pick:focus-visible { outline-color: #15141B; }
-.ticker-track:hover .ticker-list, .ticker-track:focus-within .ticker-list { animation-play-state: paused; }
+/* Keyboard focus pauses the ticker; a mouse click on a pick doesn't, so it keeps moving once the cursor leaves */
+.ticker-track:hover .ticker-list, .ticker-track:has(:focus-visible) .ticker-list { animation-play-state: paused; }
 @keyframes ticker { to { transform: translateX(-100%); } }
 @keyframes sun-spin { to { transform: rotate(360deg); } }
 @keyframes icon-play { 0%, 100% { transform: rotate(0); } 30% { transform: rotate(-14deg); } 70% { transform: rotate(10deg); } }
-@media (prefers-reduced-motion: reduce) { .ticker-list, .title-icon { animation: none !important; } * { transition-duration: 0s !important; transition-delay: 0s !important; } }
+@media (prefers-reduced-motion: reduce) { .ticker-list, .title-icon, .loader-sun, .loader-moon { animation: none !important; } * { transition-duration: 0s !important; transition-delay: 0s !important; } }
 
 /* ---------- home: statement ---------- */
 
@@ -206,7 +215,7 @@ a.door:active { background: var(--accent-30); }
 .menu-list { position: relative; display: flex; flex-direction: column; gap: var(--space-group); padding: var(--space-group); background: var(--card); border-radius: var(--radius-card); }
 .menu-row { position: relative; }
 .row-main {
-  display: flex; align-items: center; gap: 15px; width: 100%; min-height: 59px; padding: 10px 20px; border-radius: var(--radius-pill);
+  display: flex; align-items: center; gap: 10px; width: 100%; min-height: 59px; padding: 10px 16px; border-radius: var(--radius-pill);
   text-align: left; text-decoration: none; color: var(--ink); border: 2px solid transparent;
 }
 .row-num { color: var(--muted); }
@@ -216,8 +225,13 @@ a.door:active { background: var(--accent-30); }
 .menu-row.is-published .row-main { border-color: var(--accent); }
 .menu-row.is-published .row-main[aria-expanded="true"] { background: var(--accent); color: var(--on-accent); }
 .menu-row.is-published .row-main:active { background: var(--accent-60); }
-.menu-row.is-unpublished { opacity: .4; }
 .menu-row.is-unpublished .row-main { cursor: default; }
+/* Coming-soon drinks: the row fades back, the pill stays crisp so it reads as planned, not broken */
+.menu-row.is-unpublished .row-main > :not(.pill-soon) { opacity: .4; }
+/* Phones: the pill sits under the name, and a long name like Fruity Smoothie can wrap */
+.row-title { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; min-width: 0; }
+.row-title .row-name { white-space: normal; }
+.pill-soon { padding: 4px 10px; border: 1.5px dashed var(--accent); border-radius: var(--radius-pill); color: var(--accent); white-space: nowrap; }
 .menu-row.is-guest .row-main { background: var(--guest-bg, #21202B); color: var(--guest-ink, #F6F1E5); }
 [data-space="moon"] .menu-row.is-guest .row-main { --guest-bg: #FCFAF5; --guest-ink: #15141B; }
 .menu-row.is-guest .row-num { color: inherit; opacity: .7; }
@@ -227,10 +241,8 @@ a.door:active { background: var(--accent-30); }
 .row-main[aria-expanded="true"] + .drink-pop { display: flex; }
 .pop-card { display: flex; flex-direction: column; gap: 15px; padding: 20px; background: var(--card); border: var(--stroke-accent) solid var(--accent); border-radius: var(--radius-card); }
 .tags { display: flex; flex-wrap: wrap; gap: 8px; }
-.tag { padding: 6px 12px; border-radius: var(--radius-pill); font: var(--fs-meta)/1 var(--font-mono); letter-spacing: var(--ls-meta); text-transform: uppercase; color: var(--on-accent); }
-.tag-0 { background: var(--accent); }
-.tag-1 { background: var(--accent-60); }
-.tag-2 { background: var(--accent-30); color: var(--on-accent); }
+/* The tags are the range of answers, not a ranking, so they share one fill */
+.tag { padding: 6px 12px; border-radius: var(--radius-pill); font: var(--fs-meta)/1 var(--font-mono); letter-spacing: var(--ls-meta); text-transform: uppercase; color: var(--on-accent); background: var(--accent); }
 /* Illustration boxes: accent-60 card, drink fills the width and sits on the bottom */
 .pop-illo { display: flex; justify-content: center; align-items: flex-end; padding: 30px; background: linear-gradient(var(--accent-60), var(--accent-60)), var(--card); border: var(--stroke-accent) solid var(--accent); border-radius: var(--radius-card); overflow: hidden; }
 .pop-illo img { width: 100%; height: auto; }
@@ -341,6 +353,8 @@ a.door:active { background: var(--accent-30); }
 
   .row-leader { display: block; flex: 1; border-bottom: 2px dotted var(--muted); align-self: center; min-width: 20px; }
   .row-meta, .pill-guest { display: inline-flex; }
+  .row-title { display: contents; }
+  .row-title .row-name { white-space: nowrap; }
   .pill-guest { padding: 4px 10px; border-radius: var(--radius-pill); background: var(--guest-pill, #FF4FA3); color: #15141B; white-space: nowrap; }
   [data-space="moon"] .pill-guest { --guest-pill: #53A8CA; }
   .row-main { min-height: 84px; padding: 16px 28px; gap: 24px; }
@@ -350,7 +364,7 @@ a.door:active { background: var(--accent-30); }
 
   .crumbs { display: block; }
   .stories { margin-inline: 0; padding-inline: 0; }
-  .story-card { flex: 1 0 380px; padding: var(--space-section); } /* three fill the row; more scroll */
+  .story-card { flex: 0 0 max(380px, calc((100% - 30px) / 3)); padding: var(--space-section); } /* three fill the row; more scroll; fewer keep their width */
   .steps { grid-template-columns: repeat(2, 1fr); }
   .about-columns { flex-direction: row; gap: var(--space-block); }
   .about-columns p { flex: 1; }
@@ -367,6 +381,7 @@ a.door:active { background: var(--accent-30); }
   .hero .stage { grid-column: 1 / -1; grid-row: 2; }
   .stage { width: min(100%, 342px); margin: 0 auto; } /* 360 tall: the hero is as tall as the text needs */
   .special-name .mark { width: 56px; height: 56px; }
+  .special-name span { white-space: nowrap; } /* a two-line name would push the hero past the arch's 360px */
 
   /* Standard box size: every drink hero is the same height, whatever the illustration's proportions */
   .drink-hero { display: grid; grid-template-columns: 1fr 560px; grid-template-rows: 680px; gap: 30px; }
@@ -409,8 +424,7 @@ a.door:active { background: var(--accent-30); }
   .row-main[aria-expanded="true"] + .drink-pop { display: none; }
   .menu-row.is-published:hover .drink-pop,
   .menu-row.is-published:focus-within .drink-pop { display: flex; }
-  .pop-card { width: 400px; } /* fits the longest name, Shirley Temple, on one line */
-  .pop-card .button-row { margin-top: auto; }
+  .pop-card { width: 400px; align-self: flex-start; } /* fits the longest name, Shirley Temple, on one line; hugs its content beside the taller illustration */
   .pop-illo { width: 330px; }
 }
 

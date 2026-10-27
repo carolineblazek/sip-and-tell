@@ -127,6 +127,177 @@
       ]
     },
     {
+      "id": "mimosa",
+      "name": "Mimosa",
+      "space": "day",
+      "published": true,
+      "mark": {
+        "color": "#FFB619",
+        "base": "fizz",
+        "core": "citrus"
+      },
+      "stories": [],
+      "sentenceName": "mimosa",
+      "intro": "A bright, bubbly brunch classic made for slow mornings and celebratory afternoons.",
+      "about": "The mimosa combines sparkling wine with orange juice for a drink that is crisp, citrusy, and lightly sweet. Its simplicity makes it easy to adapt with different juices and sparkling wines.",
+      "funFact": "The cocktail is traditionally associated with the Hôtel Ritz Paris, where it became popular in the 1920s.",
+      "served": [
+        "Topped",
+        "Chilled"
+      ],
+      "recipe": {
+        "servesMax": 3,
+        "versions": {
+          "classic": {
+            "label": "Classic",
+            "ingredients": [
+              {
+                "item": "Chilled orange juice",
+                "qty": 3,
+                "unit": "oz"
+              },
+              {
+                "item": "Chilled champagne or sparkling wine",
+                "qty": 3,
+                "unit": "oz"
+              }
+            ],
+            "method": [
+              "Fill a champagne flute halfway with chilled orange juice.",
+              "Top with chilled champagne or sparkling wine.",
+              "Gently stir and serve immediately."
+            ]
+          },
+          "zero-proof": {
+            "label": "Zero-proof",
+            "ingredients": [
+              {
+                "item": "Chilled orange juice",
+                "qty": 3,
+                "unit": "oz"
+              },
+              {
+                "item": "Sparkling water or non-alcoholic sparkling wine",
+                "qty": 3,
+                "unit": "oz"
+              }
+            ],
+            "method": [
+              "Fill a champagne flute halfway with chilled orange juice.",
+              "Top with sparkling water or non-alcoholic sparkling wine.",
+              "Gently stir and serve immediately."
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "matcha",
+      "name": "Matcha",
+      "space": "day",
+      "published": true,
+      "mark": {
+        "color": "#86C765",
+        "base": "leaf",
+        "core": "bitter"
+      },
+      "sentenceName": "matcha",
+      "intro": "A vibrant green tea drink with a rich, earthy flavor and a long history rooted in Japanese tea culture.",
+      "about": "Matcha is made by whisking finely ground green tea powder with water, creating a smooth, slightly bitter drink with a naturally creamy texture. It can also be combined with milk and sweetener to make a matcha latte.",
+      "funFact": "Because matcha is made from the entire tea leaf rather than steeped and discarded, you consume the powdered leaf itself.",
+      "served": [
+        "Whisked",
+        "Hot or iced"
+      ],
+      "recipe": {
+        "servesMax": 3,
+        "versions": {
+          "hot": {
+            "label": "Hot",
+            "ingredients": [
+              {
+                "item": "Matcha powder",
+                "qty": 1.5,
+                "unit": "tsp"
+              },
+              {
+                "item": "Hot water",
+                "qty": 2,
+                "unit": "oz",
+                "note": "about 175°F / 80°C"
+              },
+              {
+                "item": "Milk",
+                "qty": 6,
+                "unit": "oz"
+              }
+            ],
+            "method": [
+              "Sift the matcha powder into a bowl.",
+              "Add the hot water, about 175°F / 80°C (not boiling).",
+              "Whisk vigorously until smooth and frothy. No bamboo whisk? Shake the matcha and water in a sealed jar.",
+              "Steam the milk and pour it in for a latte."
+            ]
+          },
+          "iced": {
+            "label": "Iced",
+            "ingredients": [
+              {
+                "item": "Matcha powder",
+                "qty": 1.5,
+                "unit": "tsp"
+              },
+              {
+                "item": "Hot water",
+                "qty": 2,
+                "unit": "oz",
+                "note": "about 175°F / 80°C"
+              },
+              {
+                "item": "Cold milk",
+                "qty": 6,
+                "unit": "oz"
+              },
+              {
+                "item": "Ice"
+              }
+            ],
+            "method": [
+              "Sift the matcha powder into a bowl.",
+              "Add the hot water, about 175°F / 80°C (not boiling).",
+              "Whisk vigorously until smooth and frothy. No bamboo whisk? Shake the matcha and water in a sealed jar.",
+              "Fill a glass with ice and cold milk, then pour the matcha over."
+            ]
+          }
+        }
+      },
+      "stories": []
+    },
+    {
+      "id": "chai",
+      "name": "Chai",
+      "space": "day",
+      "published": false,
+      "mark": {
+        "color": "#C97B44",
+        "base": "leaf",
+        "core": "spiced"
+      },
+      "stories": []
+    },
+    {
+      "id": "fruity-smoothie",
+      "name": "Fruity Smoothie",
+      "space": "day",
+      "published": false,
+      "mark": {
+        "color": "#EE7C9C",
+        "base": "fruit",
+        "core": "sweet"
+      },
+      "stories": []
+    },
+    {
       "id": "margarita",
       "name": "Margarita",
       "space": "moon",
@@ -258,42 +429,6 @@
       "sentenceName": "margarita"
     },
     {
-      "id": "latte",
-      "name": "Latte",
-      "space": "day",
-      "published": false,
-      "mark": {
-        "color": "#DFA36B",
-        "base": "bean",
-        "core": "creamy"
-      },
-      "stories": []
-    },
-    {
-      "id": "matcha",
-      "name": "Matcha",
-      "space": "day",
-      "published": false,
-      "mark": {
-        "color": "#86C765",
-        "base": "leaf",
-        "core": "bitter"
-      },
-      "stories": []
-    },
-    {
-      "id": "boba-tea",
-      "name": "Boba Tea",
-      "space": "day",
-      "published": false,
-      "mark": {
-        "color": "#C4875A",
-        "base": "leaf",
-        "core": "sweet"
-      },
-      "stories": []
-    },
-    {
       "id": "cosmopolitan",
       "name": "Cosmopolitan",
       "space": "moon",
@@ -393,26 +528,106 @@
       }
     },
     {
-      "id": "spritz",
-      "name": "Spritz",
+      "id": "shirley-temple",
+      "name": "Shirley Temple",
+      "space": "moon",
+      "published": true,
+      "mark": {
+        "color": "#FF5F6D",
+        "base": "fizz",
+        "core": "sweet"
+      },
+      "stories": [],
+      "sentenceName": "Shirley Temple",
+      "intro": "A sweet, sparkling mocktail that has been a fixture of restaurant menus and childhood celebrations for generations.",
+      "about": "The classic Shirley Temple combines ginger ale or lemon-lime soda with grenadine and is usually finished with a maraschino cherry. It is sweet, fizzy, and completely alcohol-free.",
+      "funFact": "The drink was named after child movie star Shirley Temple, although she reportedly disliked the drink herself.",
+      "served": [
+        "Built over ice",
+        "Zero-proof"
+      ],
+      "recipe": {
+        "servesMax": 3,
+        "versions": {
+          "classic": {
+            "label": "Classic",
+            "ingredients": [
+              {
+                "item": "Ginger ale or lemon-lime soda",
+                "qty": 6,
+                "unit": "oz"
+              },
+              {
+                "item": "Grenadine",
+                "qty": 0.75,
+                "unit": "oz"
+              },
+              {
+                "item": "Maraschino cherry",
+                "note": "to garnish"
+              }
+            ],
+            "method": [
+              "Fill a glass with ice.",
+              "Add the ginger ale or lemon-lime soda.",
+              "Add the grenadine.",
+              "Stir gently and garnish with a maraschino cherry."
+            ]
+          },
+          "dirty": {
+            "label": "Dirty Shirley",
+            "ingredients": [
+              {
+                "item": "Vodka",
+                "qty": 1.5,
+                "unit": "oz"
+              },
+              {
+                "item": "Ginger ale or lemon-lime soda",
+                "qty": 6,
+                "unit": "oz"
+              },
+              {
+                "item": "Grenadine",
+                "qty": 0.75,
+                "unit": "oz"
+              },
+              {
+                "item": "Maraschino cherry",
+                "note": "to garnish"
+              }
+            ],
+            "method": [
+              "Fill a glass with ice.",
+              "Add the vodka, then the ginger ale or lemon-lime soda.",
+              "Add the grenadine.",
+              "Stir gently and garnish with a maraschino cherry."
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "espresso-martini",
+      "name": "Espresso Martini",
       "space": "moon",
       "published": false,
       "mark": {
-        "color": "#FF9340",
-        "base": "fizz",
+        "color": "#9A6440",
+        "base": "bean",
         "core": "bitter"
       },
       "stories": []
     },
     {
-      "id": "shirley-temple",
-      "name": "Shirley Temple",
+      "id": "pina-colada",
+      "name": "Piña Colada",
       "space": "moon",
       "published": false,
       "mark": {
-        "color": "#FF5F6D",
-        "base": "fizz",
-        "core": "sweet"
+        "color": "#F9DC5C",
+        "base": "fruit",
+        "core": "creamy"
       },
       "stories": []
     }

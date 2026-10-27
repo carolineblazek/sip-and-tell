@@ -3,3 +3,6 @@
 .vscode/
 node_modules/
 .claude/
+
+# Full-size source art: kept locally, not published (the site uses assets/)
+images/
